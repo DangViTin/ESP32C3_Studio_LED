@@ -6,6 +6,8 @@ set(BOARD esp32c3_devkitm)
 set(DTC_OVERLAY_FILE "boards/ESP32C3_Studio_LED.overlay")
 
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
-project(hello_world)
 
-target_sources(app PRIVATE src/main.c)
+project(Studio_LED)
+
+target_sources(app PRIVATE src/main.cpp)
+add_subdirectory(modules/LED_matrix)

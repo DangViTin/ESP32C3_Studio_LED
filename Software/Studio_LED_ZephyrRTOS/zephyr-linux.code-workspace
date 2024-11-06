@@ -18,7 +18,19 @@
 			"stdio.h": "c",
 			"led_strip.h": "c",
 			"util.h": "c",
-			"random.h": "c"
+			"random.h": "c",
+			"log.h": "c",
+			"errno.h": "c",
+			"deque": "cpp",
+			"string": "cpp",
+			"vector": "cpp",
+			"cstdint": "cpp",
+			"led_matrix.h": "c",
+			"*.tcc": "cpp",
+			"gpio.h": "c",
+			"cmath": "cpp",
+			"chrono": "cpp",
+			"compare": "cpp"
 		}
 	},
 	"tasks": {

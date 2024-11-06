@@ -27,13 +27,10 @@
 
 		/* SPI */
 		reg = <0>; /* ignored, but necessary for SPI bindings */
-		// spi-max-frequency = <8000000>;	// with ws2812b clock at 1000Khz -> 1uS = 1bit of ws2812, now 1 bit of ws2812 will be present as 8 bit SPI => SPI clock = 8*ws2812 clock = 8Mhz
 		spi-max-frequency = <6400000>;
 		/* WS2812 */
 		chain-length = <128>; /* arbitrary; change at will */
 		spi-cpha;
-		// spi-one-frame = <0xF8>; /* 11111000: 1/8*5 uS high and 1/8*3 low */
-		// spi-zero-frame = <0xE0>; /* 11100000: 1/8*3 uS high and 1/8*5 low */
 		spi-one-frame = <0xf0>; /* 11110000: 625 ns high and 625 ns low */
 		spi-zero-frame = <0xc0>; /* 11000000: 312.5 ns high and 937.5 ns low */
 		color-mapping = <LED_COLOR_ID_GREEN
