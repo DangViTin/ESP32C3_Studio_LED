@@ -5,14 +5,14 @@
 
 #define MAX_PIXEL                   40
 #define MAX_START_DELAY_TIME_MS     5000
-#define MIN_DURATION_TIME_MS        10000
-#define MAX_DURATION_TIME_MS        15000
+#define MIN_DURATION_TIME_MS        5000
+#define MAX_DURATION_TIME_MS        12000
 
 class effect_4_random_pixel
 {
     public:
         effect_4_random_pixel(LED_matrix &matrix); // Constructor accepts reference
-        void run(uint16_t timeout_sec = 3600, uint16_t time_each_step = 5);
+        void run(uint16_t timeout_sec = 3600, uint16_t time_each_step = 10);
         
     private:
 

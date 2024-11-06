@@ -44,15 +44,19 @@ void effect_4_random_pixel::run(uint16_t timeout_sec, uint16_t time_each_step)
             // Generate random value for element if it is free
             if (LED_pixel[i].done_flag)
             {
-                LED_pixel[i].start_time = k_uptime_get_32() + sys_rand16_get() % MAX_START_DELAY_TIME_MS;
-                LED_pixel[i].end_time = LED_pixel[i].start_time + CLAMP((sys_rand16_get() % MAX_DURATION_TIME_MS), MIN_DURATION_TIME_MS, MAX_DURATION_TIME_MS);
-                LED_pixel[i].duration = LED_pixel[i].end_time - LED_pixel[i].start_time;
+                LED_pixel[i].start_time = k_uptime_get_32() + (sys_rand32_get() % MAX_START_DELAY_TIME_MS);
+                do
+                {
+                    LED_pixel[i].duration = sys_rand32_get() % MAX_DURATION_TIME_MS;
+                } 
+                while(LED_pixel[i].duration <  MIN_DURATION_TIME_MS);
+                LED_pixel[i].end_time = LED_pixel[i].start_time + LED_pixel[i].duration;
                 
                 // Generate position for LED and check if that position already used
                 do
                 {
-                    LED_pixel[i].pos_x = sys_rand16_get() % (LED_PANEL_WIDTH * NUMBER_OF_LED_PANEL);
-                    LED_pixel[i].pos_y = sys_rand16_get() % (LED_PANEL_HEIGHT);
+                    LED_pixel[i].pos_x = sys_rand32_get() % (LED_PANEL_WIDTH * NUMBER_OF_LED_PANEL);
+                    LED_pixel[i].pos_y = sys_rand32_get() % (LED_PANEL_HEIGHT);
                 }
                 while(!is_LED_availabe(LED_pixel[i].pos_x, LED_pixel[i].pos_y));
 
@@ -61,9 +65,9 @@ void effect_4_random_pixel::run(uint16_t timeout_sec, uint16_t time_each_step)
                 pos[i+1] = LED_pixel[i].pos_y;
 
                 // Generate random value for color
-                LED_pixel[i].rgb_value.r = sys_rand16_get() % 255;
-                LED_pixel[i].rgb_value.g = sys_rand16_get() % 255;
-                LED_pixel[i].rgb_value.b = sys_rand16_get() % 255;
+                LED_pixel[i].rgb_value.r = sys_rand32_get() % 0xFF;
+                LED_pixel[i].rgb_value.g = sys_rand32_get() % 0xFF;
+                LED_pixel[i].rgb_value.b = sys_rand32_get() % 0xFF;
                 
                 // Calculate 
                 LED_pixel[i].r_delta = LED_pixel[i].rgb_value.r / ((LED_pixel[i].duration / 2) / time_each_step);   // duration / 2 because it include fade-in and fade-out time
@@ -75,7 +79,7 @@ void effect_4_random_pixel::run(uint16_t timeout_sec, uint16_t time_each_step)
                 LED_pixel[i].rgb_value.g = 0;
                 LED_pixel[i].rgb_value.b = 0;
 
-                LED_pixel[i].enable_flag = sys_rand16_get() % 2;    // Let's random to see if this LED can light up :)
+                LED_pixel[i].enable_flag = sys_rand32_get() % 2;    // Let's random to see if this LED can light up :)
                 LED_pixel[i].done_flag = 0;
             }
         }
@@ -85,7 +89,8 @@ void effect_4_random_pixel::run(uint16_t timeout_sec, uint16_t time_each_step)
         {
             if (LED_pixel[k].done_flag == 0)
             {
-                if (k_uptime_get_32() >= LED_pixel[k].end_time)
+                uint32_t current_time = k_uptime_get_32();
+                if (current_time >= LED_pixel[k].end_time)
                 {
                     LED_pixel[k].rgb_value.r = 0;
                     LED_pixel[k].rgb_value.g = 0;
@@ -95,17 +100,17 @@ void effect_4_random_pixel::run(uint16_t timeout_sec, uint16_t time_each_step)
                     pos[k] = -1;
                     pos[k+1] = -1;
                 }
-                else if (k_uptime_get_32() >= LED_pixel[k].start_time + (LED_pixel[k].duration / 2))    // duration / 2 because it include fade-in and fade-out time
+                else if (current_time >= LED_pixel[k].start_time + (LED_pixel[k].duration / 2))    // duration / 2 because it include fade-in and fade-out time
                 {
-                    LED_pixel[k].rgb_value.r = CLAMP(LED_pixel[k].rgb_value.r - LED_pixel[k].r_delta, 0, 255);
-                    LED_pixel[k].rgb_value.g = CLAMP(LED_pixel[k].rgb_value.g - LED_pixel[k].g_delta, 0, 255);
-                    LED_pixel[k].rgb_value.b = CLAMP(LED_pixel[k].rgb_value.b - LED_pixel[k].b_delta, 0, 255);
+                    LED_pixel[k].rgb_value.r = CLAMP(LED_pixel[k].rgb_value.r - LED_pixel[k].r_delta, 0, 0xFF);
+                    LED_pixel[k].rgb_value.g = CLAMP(LED_pixel[k].rgb_value.g - LED_pixel[k].g_delta, 0, 0xFF);
+                    LED_pixel[k].rgb_value.b = CLAMP(LED_pixel[k].rgb_value.b - LED_pixel[k].b_delta, 0, 0xFF);
                 }
-                else if (k_uptime_get_32() >= LED_pixel[k].start_time)
+                else if (current_time >= LED_pixel[k].start_time)
                 {
-                    LED_pixel[k].rgb_value.r = CLAMP(LED_pixel[k].rgb_value.r + LED_pixel[k].r_delta, 0, 255);
-                    LED_pixel[k].rgb_value.g = CLAMP(LED_pixel[k].rgb_value.g + LED_pixel[k].g_delta, 0, 255);
-                    LED_pixel[k].rgb_value.b = CLAMP(LED_pixel[k].rgb_value.b + LED_pixel[k].b_delta, 0, 255);
+                    LED_pixel[k].rgb_value.r = CLAMP(LED_pixel[k].rgb_value.r + LED_pixel[k].r_delta, 0, 0xFF);
+                    LED_pixel[k].rgb_value.g = CLAMP(LED_pixel[k].rgb_value.g + LED_pixel[k].g_delta, 0, 0xFF);
+                    LED_pixel[k].rgb_value.b = CLAMP(LED_pixel[k].rgb_value.b + LED_pixel[k].b_delta, 0, 0xFF);
                 }
                 if (LED_pixel[k].enable_flag)
                 {
