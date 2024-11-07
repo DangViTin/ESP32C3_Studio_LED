@@ -75,6 +75,28 @@ int LED_matrix::set_pixel(uint8_t x, uint8_t y, uint8_t r, uint8_t g, uint8_t b)
     return 1;
 }
 
+int LED_matrix::set_array(uint8_t const *array, uint8_t x_len, uint8_t y_len, uint8_t x, uint8_t y, uint8_t r, uint8_t g, uint8_t b)
+{
+    // Check if array fit the LED panel
+    if (x + x_len > LED_PANEL_WIDTH * 2)
+        return -1;
+    if (y + y_len > LED_PANEL_HEIGHT)
+        return -1;
+    
+    // set the array
+    for (int8_t i = y_len - 1; i >= 0; i--)
+    {
+        for (int8_t k = x_len - 1 ; k >=0; k--)
+        {
+            if ((array[i] >> k) & 0x01)
+            {
+                set_pixel(x + x_len-1 - k, y + y_len-1 - i, r, g, b);
+            }
+        }
+    }
+    return 0;
+}
+
 void LED_matrix::fill(uint8_t r, uint8_t g, uint8_t b)
 {
     for (uint8_t y = 0; y < LED_PANEL_HEIGHT; y++)

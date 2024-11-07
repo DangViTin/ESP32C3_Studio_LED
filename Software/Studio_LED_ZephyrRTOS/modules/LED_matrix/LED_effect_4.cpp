@@ -41,7 +41,7 @@ void effect_4_random_pixel::run(uint16_t timeout_sec, uint16_t time_each_step)
     {
         for(uint8_t i = 0; i < MAX_PIXEL; i++)
         {
-            // Generate random value for element if it is free
+            // Generate random value for pixel object if it free
             if (LED_pixel[i].done_flag)
             {
                 LED_pixel[i].start_time = k_uptime_get_32() + (sys_rand32_get() % MAX_START_DELAY_TIME_MS);

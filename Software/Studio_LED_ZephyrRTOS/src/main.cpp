@@ -18,7 +18,7 @@ int main(void)
 
 	while(1)
 	{
-		// my_effect_1_clock.run(NULL, NULL, NULL);
+		my_effect_1_clock.run(NULL, NULL, NULL);
 		// k_sleep(K_MSEC(500));
 
 		// my_effect_2_single_color.run(100, 100, 100);
@@ -26,7 +26,7 @@ int main(void)
 
 		// my_effect_3_single_color_rainbow.run(100, 50);
 		
-		my_effect_4_random_pixel.run(999, 10);
+		// my_effect_4_random_pixel.run(999, 10);
 	}
 	return 0;
 }
