@@ -75,6 +75,18 @@ int LED_matrix::set_pixel(uint8_t x, uint8_t y, uint8_t r, uint8_t g, uint8_t b)
     return 1;
 }
 
+int LED_matrix::clear_pixel(uint8_t x, uint8_t y)
+{
+    uint16_t LED_pos = transform_pixel(x, y);
+    if (LED_pos >= STRIP_NUM_PIXELS)
+        return 0;
+
+    pixels[LED_pos].r = 0;
+    pixels[LED_pos].g = 0;
+    pixels[LED_pos].b = 0;
+    return 1;
+}
+
 int LED_matrix::set_array(uint8_t const *array, uint8_t x_len, uint8_t y_len, uint8_t x, uint8_t y, uint8_t r, uint8_t g, uint8_t b)
 {
     // Check if array fit the LED panel
@@ -90,7 +102,11 @@ int LED_matrix::set_array(uint8_t const *array, uint8_t x_len, uint8_t y_len, ui
         {
             if ((array[i] >> k) & 0x01)
             {
-                set_pixel(x + x_len-1 - k, y + y_len-1 - i, r, g, b);
+                set_pixel(x + x_len - 1 - k, y + y_len - 1 - i, r, g, b);
+            }
+            else
+            {
+                clear_pixel(x + x_len - 1 - k, y + y_len - 1 - i);
             }
         }
     }

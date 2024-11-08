@@ -6,7 +6,12 @@
 #define FONT5X8_WIDHT       3
 #define FONT5X8_HEIGHT      5
 
-const uint8_t font5x8[11][5] = {
+#define CLOCK_LEDS_COLOR      0x0, 0x10, 0x10
+#define CLOCK_DOT_LEDS_COLOR  0x0, 0x00, 0x10
+#define MINUTES_OF_DAY      1440
+#define BOTTOM_BAR_COLOR_VALUE  20
+
+const uint8_t font5x8[][5] = {
     // '0'
     { 0b111,   // ###
       0b101,   // # #
@@ -76,13 +81,6 @@ const uint8_t font5x8[11][5] = {
       0b111,   // ###
       0b001,   //   #
       0b111 }, // ###
-
-    // '.'
-    { 0b000,   //   
-      0b000,   //  
-      0b000,   //    
-      0b000,   //   
-      0b100 }  // #
 };
 
 

@@ -5,12 +5,12 @@
 
 effect_3_single_color_rainbow::effect_3_single_color_rainbow(LED_matrix &matrix) : matrix_ref(matrix)
 {
-    ;
+    // matrix_ref.clear();
 }
 
 void effect_3_single_color_rainbow::run(uint16_t fade_step, uint16_t time_each_step)
 {
-    matrix_ref.clear();
+    // matrix_ref.clear();
     RGB rainbow_colors[] = {
         {255, 0, 0},    // Red
         {255, 165, 0},  // Orange
