@@ -6,10 +6,12 @@
 #define FONT5X8_WIDHT       3
 #define FONT5X8_HEIGHT      5
 
-#define CLOCK_LEDS_COLOR      0x0, 0x10, 0x10
-#define CLOCK_DOT_LEDS_COLOR  0x0, 0x00, 0x10
-#define MINUTES_OF_DAY      1440
-#define BOTTOM_BAR_COLOR_VALUE  20
+#define CLOCK_LEDS_COLOR        0x10, 0x10, 0xFF
+#define CLOCK_DOT_LEDS_COLOR    0x0, 0x10, 0x10
+#define MINUTES_OF_DAY          1440
+#define BOTTOM_BAR_RED_VALUE    0x36
+#define BOTTOM_BAR_GREEN_VALUE  0x40
+#define BOTTOM_BAR_BLUE_VALUE   0x4A
 
 const uint8_t font5x8[][5] = {
     // '0'

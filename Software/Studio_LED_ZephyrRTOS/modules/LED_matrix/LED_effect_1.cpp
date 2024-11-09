@@ -31,11 +31,13 @@ void effect_1_clock::run(uint8_t hr, uint8_t min, uint8_t sec)
 
     for (uint8_t i = 0; i < (uint8_t)leds_remain; i++)
     {
-        matrix_ref.set_pixel(i, 0, 0, BOTTOM_BAR_COLOR_VALUE, 0);
+        matrix_ref.set_pixel(i, 0, BOTTOM_BAR_RED_VALUE, BOTTOM_BAR_GREEN_VALUE, BOTTOM_BAR_BLUE_VALUE);
     }
 
     float decimals_part_of_leds_remain = leds_remain - (uint8_t)leds_remain;
-    matrix_ref.set_pixel((uint8_t)leds_remain, 0, 1, (uint8_t)(BOTTOM_BAR_COLOR_VALUE * decimals_part_of_leds_remain), 0);
+    matrix_ref.set_pixel((uint8_t)leds_remain, 0,   (uint8_t)(BOTTOM_BAR_RED_VALUE * decimals_part_of_leds_remain), 
+                                                    (uint8_t)(BOTTOM_BAR_GREEN_VALUE * decimals_part_of_leds_remain), 
+                                                    (uint8_t)(BOTTOM_BAR_BLUE_VALUE * decimals_part_of_leds_remain));
 
     for (uint8_t i = (uint8_t)leds_remain + 1; i < LED_PANEL_WIDTH * NUMBER_OF_LED_PANEL; i++)
     {
