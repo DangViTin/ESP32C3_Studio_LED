@@ -7,6 +7,7 @@
 	chosen {
 		zephyr,console = &usb_serial;
 		zephyr,shell-uart = &usb_serial;
+		// zephyr,rtc = &rtc;
     };
 
 	gpio_control {
@@ -53,6 +54,11 @@
 		};
 	};
 };
+
+// &rtc {
+	// slow-clk-src = < 0x1 >;
+	// fast-clk-src = < 0x00 >;
+// };
 
 // /delete-property/ property1;
 // /delete-node/ node2;

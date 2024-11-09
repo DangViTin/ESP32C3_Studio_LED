@@ -5,6 +5,8 @@
 #include "LED_effect_3.h"
 #include "LED_effect_4.h"
 
+#include "_RTC.h"
+
 LED_matrix my_LED_matrix;
 effect_1_clock my_effect_1_clock(my_LED_matrix);
 effect_2_single_color my_effect_2_single_color(my_LED_matrix);
@@ -17,12 +19,13 @@ int main(void)
 	my_LED_matrix.power_enable();
 	my_LED_matrix.clear();
 	uint8_t h, m, s;
+	
 	while(1)
 	{
 		my_effect_1_clock.run(h, m, s);
 		k_sleep(K_MSEC(1000));
 
-		s++;
+		m++;
 		if (s == 60)
 		{
 			s = 0;
