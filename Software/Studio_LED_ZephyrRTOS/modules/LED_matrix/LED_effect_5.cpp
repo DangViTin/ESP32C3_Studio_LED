@@ -1,5 +1,4 @@
 #include "LED_effect_5.h"
-#include <zephyr/kernel.h>
 #include <zephyr/random/random.h>
 
 effect_5_bouncing_ball::effect_5_bouncing_ball(LED_matrix &matrix) : matrix_ref(matrix) 
@@ -72,15 +71,6 @@ void effect_5_bouncing_ball::run(uint16_t timeout_sec, uint16_t time_each_step)
             {
                 ball[i].y_direction = 1;
             }
-
-            // if (ball[i].speed_point <= ball[i].speed)
-            // {
-            //     ball[i].speed_point++;
-            // }
-            // else
-            // {
-            //     ball[i].speed_point = 0;
-            // }
 
             ball[i].pos_x += (ball[i].x_direction > 0 ? 1 : -1);
             ball[i].pos_y += (ball[i].y_direction > 0 ? 1 : -1);

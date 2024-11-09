@@ -20,30 +20,11 @@ int main(void)
 	my_LED_matrix.init();
 	my_LED_matrix.power_enable();
 	my_LED_matrix.clear();
-	uint8_t h, m, s;
 
 	while(1)
 	{
 		// my_effect_1_clock.run(h, m, s);
-		// k_sleep(K_MSEC(1000));
 
-		// m++;
-		// if (s == 60)
-		// {
-		// 	s = 0;
-		// 	m++;
-		// }
-		
-		// if (m == 60)
-		// {
-		// 	m = 0;
-		// 	h++;
-		// }
-
-		// if (h == 24)
-		// {
-		// 	h = 0;
-		// }
 		// my_effect_2_single_color.run(100, 100, 100);
 		// k_sleep(K_MSEC(500));
 
