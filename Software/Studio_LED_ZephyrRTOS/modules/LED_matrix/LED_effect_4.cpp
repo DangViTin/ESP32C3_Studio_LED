@@ -9,7 +9,7 @@ effect_4_random_pixel::effect_4_random_pixel(LED_matrix &matrix) : matrix_ref(ma
     // matrix_ref.clear();
 }
 
-uint8_t effect_4_random_pixel::is_LED_availabe(int8_t pos_x, int8_t pos_y)
+uint8_t effect_4_random_pixel::is_LED_available(int8_t pos_x, int8_t pos_y)
 {
     for (uint8_t i = 0; i < MAX_PIXEL*2; i+=2)
     {
