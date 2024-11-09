@@ -37,7 +37,7 @@ class effect_4_random_pixel
         LED_pixel LED_pixel[MAX_PIXEL] = {0};
         int8_t pos[MAX_PIXEL*2] = {-1};
 
-        uint8_t is_LED_availabe(int8_t pos_x, int8_t pos_y);
+        uint8_t is_LED_available(int8_t pos_x, int8_t pos_y);
         void clear();
 
         LED_matrix &matrix_ref; // Member variable to store the reference

@@ -58,7 +58,7 @@ void effect_4_random_pixel::run(uint16_t timeout_sec, uint16_t time_each_step)
                     LED_pixel[i].pos_x = sys_rand32_get() % (LED_PANEL_WIDTH * NUMBER_OF_LED_PANEL);
                     LED_pixel[i].pos_y = sys_rand32_get() % (LED_PANEL_HEIGHT);
                 }
-                while(!is_LED_availabe(LED_pixel[i].pos_x, LED_pixel[i].pos_y));
+                while(!is_LED_available(LED_pixel[i].pos_x, LED_pixel[i].pos_y));
 
                 // Add to list
                 pos[i] = LED_pixel[i].pos_x;
