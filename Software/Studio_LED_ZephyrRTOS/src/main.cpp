@@ -30,8 +30,8 @@ int main(void)
 
 		// my_effect_3_single_color_rainbow.run(100, 50);
 		
-		// my_effect_4_random_pixel.run(999, 10);
-		my_effect_5_bouncing_ball.run();
+		// my_effect_4_random_pixel.run(10, 10);
+		my_effect_5_bouncing_ball.run(10, 120);
 	}
 	return 0;
 }

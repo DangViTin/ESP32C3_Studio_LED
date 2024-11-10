@@ -60,7 +60,7 @@ uint16_t LED_matrix::transform_pixel(uint8_t x, uint8_t y)
     uint8_t panel_number;
 
     panel_number = (NUMBER_OF_LED_PANEL - 1) - (x / LED_PANEL_WIDTH);
-    return (panel_number * 64) + (LED_PANEL_WIDTH * y) + (LED_PANEL_WIDTH - (x % LED_PANEL_WIDTH)) - 1;
+    return (panel_number * LEDS_PER_PANEL) + (LED_PANEL_WIDTH * y) + (LED_PANEL_WIDTH - (x % LED_PANEL_WIDTH)) - 1;
 }
    
 int LED_matrix::set_pixel(uint8_t x, uint8_t y, uint8_t r, uint8_t g, uint8_t b)
@@ -85,6 +85,16 @@ int LED_matrix::clear_pixel(uint8_t x, uint8_t y)
     pixels[LED_pos].g = 0;
     pixels[LED_pos].b = 0;
     return 1;
+}
+
+void LED_matrix::clear_all_pixels()
+{
+    for (uint8_t i = 0; i < STRIP_NUM_PIXELS; i++)
+    {
+        pixels[i].r = 0;
+        pixels[i].g = 0;
+        pixels[i].b = 0;
+    }
 }
 
 int LED_matrix::set_array(uint8_t const *array, uint8_t x_len, uint8_t y_len, uint8_t x, uint8_t y, uint8_t r, uint8_t g, uint8_t b)

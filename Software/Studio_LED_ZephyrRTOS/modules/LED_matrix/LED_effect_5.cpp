@@ -1,9 +1,16 @@
 #include "LED_effect_5.h"
+#include <string.h>
 #include <zephyr/random/random.h>
 
 effect_5_bouncing_ball::effect_5_bouncing_ball(LED_matrix &matrix) : matrix_ref(matrix) 
 {
     ;
+}
+
+void effect_5_bouncing_ball::clear()
+{
+    memset(effect_5_bouncing_ball::ball, 0, sizeof(effect_5_bouncing_ball::ball));
+    memset(effect_5_bouncing_ball::pos, -1 , sizeof(effect_5_bouncing_ball::pos));
 }
 
 uint8_t effect_5_bouncing_ball::is_ball_available(int8_t pos_x, int8_t pos_y)
@@ -20,7 +27,8 @@ uint8_t effect_5_bouncing_ball::is_ball_available(int8_t pos_x, int8_t pos_y)
 
 void effect_5_bouncing_ball::run(uint16_t timeout_sec, uint16_t time_each_step)
 {
-    ball ball[MAX_BALL] = {0};
+    // Clear all old effects
+    matrix_ref.clear_all_pixels();
 
     // Init balls value
     for (uint8_t i = 0; i < MAX_BALL; i++)
@@ -81,4 +89,5 @@ void effect_5_bouncing_ball::run(uint16_t timeout_sec, uint16_t time_each_step)
         led_strip_update_rgb(matrix_ref.strip, matrix_ref.pixels, STRIP_NUM_PIXELS);
         k_sleep(K_MSEC(time_each_step));
     }
+    clear();
 }

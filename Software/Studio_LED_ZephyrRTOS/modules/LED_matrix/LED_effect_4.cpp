@@ -6,7 +6,7 @@
 
 effect_4_random_pixel::effect_4_random_pixel(LED_matrix &matrix) : matrix_ref(matrix)
 {
-    // matrix_ref.clear();
+    ;
 }
 
 uint8_t effect_4_random_pixel::is_LED_available(int8_t pos_x, int8_t pos_y)
@@ -29,7 +29,9 @@ void effect_4_random_pixel::clear()
 
 void effect_4_random_pixel::run(uint16_t timeout_sec, uint16_t time_each_step)
 {
-    // matrix_ref.clear();
+    // Clear all old effects
+    matrix_ref.clear_all_pixels();
+
     for(uint8_t i = 0; i < MAX_PIXEL; i++)
     {
         LED_pixel[i].done_flag = 1;
