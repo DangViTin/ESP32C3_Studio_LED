@@ -81,20 +81,13 @@ int LED_matrix::clear_pixel(uint8_t x, uint8_t y)
     if (LED_pos >= STRIP_NUM_PIXELS)
         return 0;
 
-    pixels[LED_pos].r = 0;
-    pixels[LED_pos].g = 0;
-    pixels[LED_pos].b = 0;
+    memset(&pixels[LED_pos], 0, sizeof(pixels[LED_pos]));
     return 1;
 }
 
 void LED_matrix::clear_all_pixels()
 {
-    for (uint8_t i = 0; i < STRIP_NUM_PIXELS; i++)
-    {
-        pixels[i].r = 0;
-        pixels[i].g = 0;
-        pixels[i].b = 0;
-    }
+    memset(pixels, 0, sizeof(pixels));
 }
 
 int LED_matrix::set_array(uint8_t const *array, uint8_t x_len, uint8_t y_len, uint8_t x, uint8_t y, uint8_t r, uint8_t g, uint8_t b)
