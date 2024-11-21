@@ -29,7 +29,7 @@ class LED_matrix
 
     private:
         struct gpio_dt_spec LED_enable_pin;
-        uint16_t transform_pixel(uint8_t x, uint8_t y);
+        int16_t transform_pixel(int16_t x, int16_t y);
 };
 
 #endif

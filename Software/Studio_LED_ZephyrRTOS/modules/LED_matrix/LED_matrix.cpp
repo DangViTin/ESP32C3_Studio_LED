@@ -55,18 +55,23 @@ void LED_matrix::power_disable()
 //     +---+---+---+---+---+---+---+---+           +---+---+---+---+---+---+---+---+
 //       0   1   2   3   4   5   6   7               8   9  10  11  12  13  14  15
 
-uint16_t LED_matrix::transform_pixel(uint8_t x, uint8_t y)
+int16_t LED_matrix::transform_pixel(int16_t x, int16_t y)
 {
-    uint8_t panel_number;
+    if (x < 0 || y < 0)
+        return -1;
+    
+    if ((x >= LED_PANEL_WIDTH * NUMBER_OF_LED_PANEL) || (y >= LED_PANEL_HEIGHT))
+        return -1;
 
+    uint8_t panel_number;
     panel_number = (NUMBER_OF_LED_PANEL - 1) - (x / LED_PANEL_WIDTH);
     return (panel_number * LEDS_PER_PANEL) + (LED_PANEL_WIDTH * y) + (LED_PANEL_WIDTH - (x % LED_PANEL_WIDTH)) - 1;
 }
    
 int LED_matrix::set_pixel(uint8_t x, uint8_t y, uint8_t r, uint8_t g, uint8_t b)
 {
-    uint16_t LED_pos = transform_pixel(x, y);
-    if (LED_pos >= STRIP_NUM_PIXELS)
+    int16_t LED_pos = transform_pixel(x, y);
+    if (LED_pos >= STRIP_NUM_PIXELS || LED_pos < 0)
         return 0;
 
     pixels[LED_pos].r = r;
@@ -93,7 +98,7 @@ void LED_matrix::clear_all_pixels()
 int LED_matrix::set_array(uint8_t const *array, uint8_t x_len, uint8_t y_len, uint8_t x, uint8_t y, uint8_t r, uint8_t g, uint8_t b)
 {
     // Check if array fit the LED panel
-    if (x + x_len > LED_PANEL_WIDTH * 2)
+    if (x + x_len > LED_PANEL_WIDTH * NUMBER_OF_LED_PANEL)
         return -1;
     if (y + y_len > LED_PANEL_HEIGHT)
         return -1;

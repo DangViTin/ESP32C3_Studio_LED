@@ -30,7 +30,8 @@
 			"gpio.h": "c",
 			"cmath": "cpp",
 			"chrono": "cpp",
-			"compare": "cpp"
+			"compare": "cpp",
+			"random": "cpp"
 		}
 	},
 	"tasks": {
