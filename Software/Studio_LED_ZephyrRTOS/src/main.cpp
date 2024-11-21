@@ -5,6 +5,7 @@
 #include "LED_effect_3.h"
 #include "LED_effect_4.h"
 #include "LED_effect_5.h"
+#include "LED_effect_6.h"
 
 #include "_RTC.h"
 
@@ -14,6 +15,7 @@ effect_2_single_color my_effect_2_single_color(my_LED_matrix);
 effect_3_single_color_rainbow my_effect_3_single_color_rainbow(my_LED_matrix);
 effect_4_random_pixel my_effect_4_random_pixel(my_LED_matrix);
 effect_5_bouncing_ball my_effect_5_bouncing_ball(my_LED_matrix);
+effect_6_meteor my_effect_6_meteor(my_LED_matrix);
 
 int main(void)
 {
@@ -28,10 +30,13 @@ int main(void)
 		// my_effect_2_single_color.run(100, 100, 100);
 		// k_sleep(K_MSEC(500));
 
-		// my_effect_3_single_color_rainbow.run(100, 50);
+		my_effect_3_single_color_rainbow.run(200, 50);
 		
-		my_effect_4_random_pixel.run(3600, 10);
-		// my_effect_5_bouncing_ball.run(10, 120);
+		my_effect_4_random_pixel.run(10, 10);
+
+		my_effect_5_bouncing_ball.run(10, 80);
+
+		my_effect_6_meteor.run(10, 40);
 	}
 	return 0;
 }
