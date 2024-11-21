@@ -3,7 +3,7 @@
 
 #include "LED_matrix.h"
 
-#define MAX_BALL  3
+#define MAX_BALL  4
 
 class effect_5_bouncing_ball
 {

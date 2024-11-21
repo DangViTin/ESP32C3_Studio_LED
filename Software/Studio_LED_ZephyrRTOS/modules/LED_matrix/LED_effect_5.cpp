@@ -41,6 +41,10 @@ void effect_5_bouncing_ball::run(uint16_t timeout_sec, uint16_t time_each_step)
         }
         while (!is_ball_available(ball[i].pos_x, ball[i].pos_y));
 
+        // Add to list
+        pos[i] = ball[i].pos_x;
+        pos[i+1] = ball[i].pos_y;
+
         ball[i].rgb_value.r = sys_rand32_get() % 0xFF;
         ball[i].rgb_value.g = sys_rand32_get() % 0xFF;
         ball[i].rgb_value.b = sys_rand32_get() % 0xFF;
