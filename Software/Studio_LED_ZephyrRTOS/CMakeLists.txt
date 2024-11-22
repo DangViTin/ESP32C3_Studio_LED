@@ -10,6 +10,10 @@ find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 project(Studio_LED)
 
 target_sources(app PRIVATE src/main.cpp)
-add_subdirectory(modules/LED_matrix)
-add_subdirectory(modules/digital_clock)
-add_subdirectory(modules/battery_voltage)
+
+add_subdirectory(services/LED_matrix)
+add_subdirectory(services/analog_digital_converter)
+
+add_subdirectory(apps/LED_effects)
+add_subdirectory(apps/digital_clock)
+add_subdirectory(apps/battery_monitoring)

@@ -8,6 +8,7 @@
 #include "LED_effect_6.h"
 
 #include "digital_clock.h"
+#include "battery_monitoring.h"
 
 LED_matrix my_LED_matrix;
 effect_1_clock my_effect_1_clock(my_LED_matrix);
@@ -36,7 +37,11 @@ int main(void)
 
 		// my_effect_5_bouncing_ball.run(10, 80);
 
-		my_effect_6_meteor.run(3600, 40);
+		// my_effect_6_meteor.run(3600, 40);
+
+		ADC_test();
+		
+		k_sleep(K_MSEC(1000));
 	}
 	return 0;
 }
