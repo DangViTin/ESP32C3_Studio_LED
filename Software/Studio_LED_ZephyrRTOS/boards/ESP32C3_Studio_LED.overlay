@@ -1,6 +1,11 @@
  #include <zephyr/dt-bindings/led/led.h>
 
 / {
+	zephyr,user {
+		io-channels =
+			<&adc0 3>;	// ADC0, Channel number 3
+	};
+
 	aliases {
 		led-strip = &led_strip;
 	};
@@ -9,14 +14,6 @@
 		zephyr,shell-uart = &usb_serial;
 		// zephyr,rtc = &rtc;
     };
-
-	gpio_control {
-		compatible = "gpio-leds";
-		led_strip_enable: led_strip_enable {
-			gpios = <&gpio0 10 GPIO_ACTIVE_HIGH>;
-		};
-	};
-
 };
 
 &spi2 {
@@ -38,6 +35,13 @@
 						LED_COLOR_ID_RED
 						LED_COLOR_ID_BLUE>;
 	};
+
+	gpio_control {
+		compatible = "gpio-leds";
+		led_strip_enable: led_strip_enable {
+			gpios = <&gpio0 10 GPIO_ACTIVE_HIGH>;
+		};
+	};
 };
 
 &pinctrl {
@@ -54,6 +58,28 @@
 		};
 	};
 };
+
+&adc0 {
+	status = "okay";
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	channel@3 {		// Channel number 3
+		reg = <3>;	// Channel number 3
+		zephyr,gain = "ADC_GAIN_1_4";
+		zephyr,reference = "ADC_REF_INTERNAL";
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,resolution = <12>;
+	};
+
+	gpio_control {
+		compatible = "gpio-leds";
+		adc_read_enable: adc_read_enable {
+			gpios = <&gpio0 9 GPIO_ACTIVE_HIGH>;
+		};
+	};
+};
+
 
 // &rtc {
 	// slow-clk-src = < 0x1 >;
