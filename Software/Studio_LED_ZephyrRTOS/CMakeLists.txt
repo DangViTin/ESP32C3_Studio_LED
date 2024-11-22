@@ -11,4 +11,5 @@ project(Studio_LED)
 
 target_sources(app PRIVATE src/main.cpp)
 add_subdirectory(modules/LED_matrix)
-add_subdirectory(modules/RTC)
+add_subdirectory(modules/digital_clock)
+add_subdirectory(modules/battery_voltage)
