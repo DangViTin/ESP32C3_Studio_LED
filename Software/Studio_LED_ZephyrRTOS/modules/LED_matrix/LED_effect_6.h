@@ -3,8 +3,9 @@
 
 #include "LED_matrix.h"
 
-#define MAX_METEOR          6
+#define MAX_METEOR          8
 #define METEOR_TAIL_LENGTH  6
+#define METEOR_FADING_RATIO 0.7
 
 class effect_6_meteor
 {

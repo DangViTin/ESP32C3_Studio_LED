@@ -62,9 +62,9 @@ void effect_6_meteor::run(uint16_t timeout_sec, uint16_t time_each_step)
             // Meteor tail value fading out from head color
             for (uint8_t k = 1; k < METEOR_TAIL_LENGTH; k++)
             {
-                meteor[i].rgb_value[k].r = meteor[i].rgb_value[k-1].r * (1.0 - (1.0 * k / METEOR_TAIL_LENGTH));
-                meteor[i].rgb_value[k].g = meteor[i].rgb_value[k-1].g * (1.0 - (1.0 * k / METEOR_TAIL_LENGTH));
-                meteor[i].rgb_value[k].b = meteor[i].rgb_value[k-1].b * (1.0 - (1.0 * k / METEOR_TAIL_LENGTH));
+                meteor[i].rgb_value[k].r = meteor[i].rgb_value[k-1].r * METEOR_FADING_RATIO * (1.0 - (1.0 * k / METEOR_TAIL_LENGTH));
+                meteor[i].rgb_value[k].g = meteor[i].rgb_value[k-1].g * METEOR_FADING_RATIO * (1.0 - (1.0 * k / METEOR_TAIL_LENGTH));
+                meteor[i].rgb_value[k].b = meteor[i].rgb_value[k-1].b * METEOR_FADING_RATIO * (1.0 - (1.0 * k / METEOR_TAIL_LENGTH));
             }
 
             meteor[i].done_flag = 0;
