@@ -5,7 +5,7 @@
 #include <time.h>
 #include <sys/time.h>
 #include <string.h>
-#include "_RTC.h"
+#include "digital_clock.h"
 #include <zephyr/kernel.h>
 
 LOG_MODULE_REGISTER(RTC, LOG_LEVEL_DBG);

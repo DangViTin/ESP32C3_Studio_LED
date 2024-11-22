@@ -7,7 +7,7 @@
 #include "LED_effect_5.h"
 #include "LED_effect_6.h"
 
-#include "_RTC.h"
+#include "digital_clock.h"
 
 LED_matrix my_LED_matrix;
 effect_1_clock my_effect_1_clock(my_LED_matrix);
@@ -30,13 +30,13 @@ int main(void)
 		// my_effect_2_single_color.run(100, 100, 100);
 		// k_sleep(K_MSEC(500));
 
-		my_effect_3_single_color_rainbow.run(200, 50);
+		// my_effect_3_single_color_rainbow.run(200, 50);
 		
-		my_effect_4_random_pixel.run(10, 10);
+		// my_effect_4_random_pixel.run(10, 10);
 
-		my_effect_5_bouncing_ball.run(10, 80);
+		// my_effect_5_bouncing_ball.run(10, 80);
 
-		my_effect_6_meteor.run(10, 40);
+		my_effect_6_meteor.run(3600, 40);
 	}
 	return 0;
 }
