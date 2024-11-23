@@ -74,7 +74,7 @@
 
 	gpio_control {
 		compatible = "gpio-leds";
-		adc_read_enable: adc_read_enable {
+		adc0_ch3_enable_pin: adc0_ch3_enable_pin {
 			gpios = <&gpio0 9 GPIO_ACTIVE_HIGH>;
 		};
 	};
