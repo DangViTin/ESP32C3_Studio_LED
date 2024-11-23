@@ -31,7 +31,8 @@
 			"cmath": "cpp",
 			"chrono": "cpp",
 			"compare": "cpp",
-			"random": "cpp"
+			"random": "cpp",
+			"typeinfo": "cpp"
 		}
 	},
 	"tasks": {
