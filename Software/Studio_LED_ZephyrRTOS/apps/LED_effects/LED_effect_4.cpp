@@ -47,11 +47,9 @@ void effect_4_random_pixel::run(uint16_t timeout_sec, uint16_t time_each_step)
             if (LED_pixel[i].done_flag)
             {
                 LED_pixel[i].start_time = k_uptime_get_32() + (sys_rand32_get() % MAX_START_DELAY_TIME_MS);
-                do
-                {
-                    LED_pixel[i].duration = sys_rand32_get() % MAX_DURATION_TIME_MS;
-                } 
-                while(LED_pixel[i].duration <  MIN_DURATION_TIME_MS);
+
+                LED_pixel[i].duration = MIN_DURATION_TIME_MS + (sys_rand32_get() % (MAX_DURATION_TIME_MS - MIN_DURATION_TIME_MS));
+
                 LED_pixel[i].end_time = LED_pixel[i].start_time + LED_pixel[i].duration;
                 
                 // Generate position for LED and check if that position already used
