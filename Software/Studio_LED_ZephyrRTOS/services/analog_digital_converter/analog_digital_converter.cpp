@@ -64,9 +64,13 @@ int32_t analog_digital_converter::read_raw()
 
 int32_t analog_digital_converter::read_voltage()
 {
+    int32_t _adc_voltage_mV_value_;
     read_raw();
-    adc_voltage_mV_value = adc_raw_value;
-    adc_raw_to_millivolts_dt(&ADC_channel, &adc_voltage_mV_value);
+    // Using temporary variable
+    _adc_voltage_mV_value_ = adc_raw_value;
+    adc_raw_to_millivolts_dt(&ADC_channel, &_adc_voltage_mV_value_);
+    adc_voltage_mV_value = _adc_voltage_mV_value_;
+
     LOG_DBG("%s, ch %d: vol val: %d", ADC_channel.dev->name, ADC_channel.channel_id, adc_voltage_mV_value);
     return adc_voltage_mV_value;
 }
