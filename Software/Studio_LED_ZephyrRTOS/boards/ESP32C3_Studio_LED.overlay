@@ -1,19 +1,29 @@
- #include <zephyr/dt-bindings/led/led.h>
+#include <zephyr/dt-bindings/led/led.h>
+#include <zephyr/dt-bindings/pwm/pwm.h>
 
 / {
-	zephyr,user {
-		io-channels =
-			<&adc0 3>;	// ADC0, Channel number 3
-	};
-
 	aliases {
 		led-strip = &led_strip;
+		pwm-fan = &ledc0_ch0_gpio5;
 	};
+
 	chosen {
 		zephyr,console = &usb_serial;
 		zephyr,shell-uart = &usb_serial;
 		// zephyr,rtc = &rtc;
     };
+
+	zephyr,user {
+		io-channels =
+			<&adc0 3>;	// ADC0, Channel number 3
+	};
+
+	pwmfan {
+		compatible = "pwm-leds";
+		ledc0_ch0_gpio5: ledc0_ch0_gpio5 {
+			pwms = <&ledc0 0 100 PWM_POLARITY_NORMAL>;
+		};
+	};
 };
 
 &spi2 {
@@ -46,15 +56,22 @@
 
 &pinctrl {
 	spim2_default: spim2_default {
-		/delete-property/ group1;
+		/delete-property/ group1;	// Delte old prop and insert new one
 		group1 {
 			pinmux = <SPIM2_MISO_GPIO2>,
-				 <SPIM2_SCLK_GPIO6>;
+				 	<SPIM2_SCLK_GPIO6>;
 				//  <SPIM2_CSEL_GPIO10>	// disable this CS pin because this GPIO is used as LED_enable pin
 				
 		};
 		group2 {
 			pinmux = <SPIM2_MOSI_GPIO6>;
+		};
+	};
+
+	ledc0_default: ledc0_default {
+		group1 {
+			pinmux = <LEDC_CH0_GPIO5>;
+			output-enable;
 		};
 	};
 };
@@ -80,6 +97,17 @@
 	};
 };
 
+&ledc0 {
+	pinctrl-0 = <&ledc0_default>;
+	pinctrl-names = "default";
+	status = "okay";
+	#address-cells = <1>;
+	#size-cells = <0>;
+	channel0@0 {
+		reg = <0x0>;
+		timer = <0>;
+	};
+};
 
 // &rtc {
 	// slow-clk-src = < 0x1 >;

@@ -13,7 +13,9 @@ target_sources(app PRIVATE src/main.cpp)
 
 add_subdirectory(services/LED_matrix)
 add_subdirectory(services/analog_digital_converter)
+add_subdirectory(services/pulse_width_modulation)
 
 add_subdirectory(apps/LED_effects)
 add_subdirectory(apps/digital_clock)
 add_subdirectory(apps/battery_monitoring)
+add_subdirectory(apps/cooling_system)
