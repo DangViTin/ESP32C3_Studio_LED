@@ -1,6 +1,7 @@
 #include <zephyr/dt-bindings/led/led.h>
 #include <zephyr/dt-bindings/pwm/pwm.h>
-
+#include <zephyr/dt-bindings/lvgl/lvgl.h>
+#include <zephyr/dt-bindings/input/input-event-codes.h>
 / {
 	aliases {
 		led-strip = &led_strip;
@@ -8,6 +9,7 @@
 	};
 
 	chosen {
+		zephyr,display = &ssd1306_ssd1306_128x32;
 		zephyr,console = &usb_serial;
 		zephyr,shell-uart = &usb_serial;
 		// zephyr,rtc = &rtc;
@@ -23,6 +25,32 @@
 		ledc0_ch0_gpio5: ledc0_ch0_gpio5 {
 			pwms = <&ledc0 0 100 PWM_POLARITY_NORMAL>;
 		};
+	};
+
+	buttons: gpio_keys {
+		compatible = "gpio-keys";
+		user_button0: button_0 {
+			label = "User BTN0";
+			gpios = <&gpio0 0 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			zephyr,code = <INPUT_KEY_LEFT>;
+		};
+		user_button1: button_1 {
+			label = "User BTN1";
+			gpios = <&gpio0 1 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			zephyr,code = <INPUT_KEY_RIGHT>;
+		};
+		user_button2: button_2 {
+			label = "User BTN2";
+			gpios = <&gpio0 2 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			zephyr,code = <INPUT_KEY_ENTER>;
+		};
+	};
+
+	keypad {
+        compatible = "zephyr,lvgl-keypad-input";
+        input = <&buttons>;
+        input-codes = <INPUT_KEY_LEFT INPUT_KEY_RIGHT INPUT_KEY_ENTER>;
+        lvgl-codes = <LV_KEY_LEFT LV_KEY_RIGHT LV_KEY_NEXT>;
 	};
 };
 
@@ -54,6 +82,24 @@
 	};
 };
 
+&i2c0 {
+	clock-frequency = < 400000 >;
+	ssd1306_ssd1306_128x32: ssd1306@3c {
+		compatible = "solomon,ssd1306fb";
+		reg = <0x3c>;
+		width = <128>;
+		height = <32>;
+		segment-offset = <0>;
+		page-offset = <0>;
+		display-offset = <0>;
+		multiplex-ratio = <31>;
+		segment-remap;
+		com-invdir;
+		com-sequential;
+		prechargep = <0x22>;
+	};
+};
+
 &pinctrl {
 	spim2_default: spim2_default {
 		/delete-property/ group1;	// Delte old prop and insert new one
@@ -65,6 +111,17 @@
 		};
 		group2 {
 			pinmux = <SPIM2_MOSI_GPIO6>;
+		};
+	};
+
+	i2c0_default: i2c0_default {
+		/delete-property/ group1;	// Delte old prop and insert new one
+		group1 {
+			pinmux = 	<I2C0_SDA_GPIO7>,
+						<I2C0_SCL_GPIO8>;
+			bias-pull-up;
+			drive-open-drain;
+			output-high;
 		};
 	};
 

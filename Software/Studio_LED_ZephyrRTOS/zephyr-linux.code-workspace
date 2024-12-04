@@ -32,7 +32,11 @@
 			"chrono": "cpp",
 			"compare": "cpp",
 			"random": "cpp",
-			"typeinfo": "cpp"
+			"typeinfo": "cpp",
+			"ui.h": "c",
+			"ui_helpers.h": "c",
+			"lv_indev.h": "c",
+			"lv_group.h": "c"
 		}
 	},
 	"tasks": {
