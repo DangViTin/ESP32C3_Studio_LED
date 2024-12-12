@@ -143,6 +143,9 @@ void ui_event_effects(lv_event_t * e)
     if(event_code == LV_EVENT_SCREEN_LOADED) {
         screen_3_init_effect(e);
     }
+    if(event_code == LV_EVENT_SCREEN_UNLOAD_START) {
+        screen_3_exit_effect(e);
+    }
 }
 
 void ui_event_nextBtn3(lv_event_t * e)
@@ -158,7 +161,7 @@ void ui_event_effectsRoller(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
 
-    if(event_code == LV_EVENT_DEFOCUSED) {
+    if(event_code == LV_EVENT_VALUE_CHANGED) {
         effects_change(e);
     }
 }

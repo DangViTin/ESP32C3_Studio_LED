@@ -14,6 +14,7 @@ void set_input_screen_1(lv_event_t * e);
 void set_input_screen_2(lv_event_t * e);
 void set_input_screen_3(lv_event_t * e);
 void screen_3_init_effect(lv_event_t * e);
+void screen_3_exit_effect(lv_event_t * e);
 void effects_change(lv_event_t * e);
 
 #ifdef __cplusplus

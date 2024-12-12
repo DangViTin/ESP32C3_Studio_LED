@@ -9,6 +9,8 @@ LOG_MODULE_REGISTER(USR_UI, LOG_LEVEL_DBG);
 
 static const struct device *lvgl_keypad = DEVICE_DT_GET(DT_COMPAT_GET_ANY_STATUS_OKAY(zephyr_lvgl_keypad_input));
 
+char roller_str[25] = {0};
+
 lv_group_t *screen1_group;
 lv_group_t *screen2_group;
 lv_group_t *screen3_group;
@@ -30,29 +32,17 @@ void set_input_screen_3(lv_event_t *e)
 
 void screen_3_init_effect(lv_event_t *e)
 {
-    // char buf[25] = {0};
-    // lv_roller_get_selected_str(ui_effectsRoller, buf, sizeof(buf));
+    lv_roller_get_selected_str(ui_effectsRoller, roller_str, sizeof(roller_str));
 }
 
 void effects_change(lv_event_t *e)
 {
-    // char buf[25] = {0};
-    // lv_roller_get_selected_str(ui_effectsRoller, buf, sizeof(buf));
-    // if (!strcmp(buf, "Rainbow"))
-    // {
-    // }
-    // else if (!strcmp(buf, "Meteors"))
-    // {
-    // }
-    // else if (!strcmp(buf, "Twinkling stars"))
-    // {
-    // }
-    // else if (!strcmp(buf, "Bouncing balls"))
-    // {
-    // }
-    // else if (!strcmp(buf, "Digital clock"))
-    // {
-    // }
+    lv_roller_get_selected_str(ui_effectsRoller, roller_str, sizeof(roller_str));
+}
+
+void screen_3_exit_effect(lv_event_t *e)
+{
+    memset(roller_str, 0, sizeof(roller_str));
 }
 
 void usr_ui_thread_main()
@@ -80,6 +70,7 @@ void usr_ui_thread_main()
 
     lv_task_handler();
     display_blanking_off(display_dev);
+
     while (1)
     {
         lv_task_handler();
