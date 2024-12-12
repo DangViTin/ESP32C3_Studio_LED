@@ -52,6 +52,14 @@
         input-codes = <INPUT_KEY_LEFT INPUT_KEY_RIGHT INPUT_KEY_ENTER>;
         lvgl-codes = <LV_KEY_LEFT LV_KEY_RIGHT LV_KEY_NEXT>;
 	};
+
+	input_signals{
+		compatible = "gpio-keys";
+		charger_status_pin: charger_status_pin {
+			gpios = <&gpio0 4 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			zephyr,code = <INPUT_KEY_0>;
+		};
+	};	
 };
 
 &spi2 {

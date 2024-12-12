@@ -79,4 +79,4 @@ void cooling_system_thread_main()
 
 K_THREAD_DEFINE(cooling_system_thread, COOLING_SYS_THREAD_STACK_SIZE, 
                 cooling_system_thread_main, NULL, NULL, NULL, 
-                COOLING_SYS_THREAD_PRIORITY, 0, 0);
+                COOLING_SYS_THREAD_PRIORITY, 0, 100);

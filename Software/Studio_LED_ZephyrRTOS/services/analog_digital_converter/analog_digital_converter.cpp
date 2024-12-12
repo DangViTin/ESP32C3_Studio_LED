@@ -10,7 +10,7 @@
 
 #include "analog_digital_converter.h"
 
-LOG_MODULE_REGISTER(ADC, LOG_LEVEL_DBG);
+LOG_MODULE_REGISTER(ADC, LOG_LEVEL_INF);
 
 void analog_digital_converter::init(uint8_t dt_adc_channel_idx, gpio_dt_spec *adc_enable_pin)
 {
@@ -36,8 +36,6 @@ void analog_digital_converter::init(uint8_t dt_adc_channel_idx, gpio_dt_spec *ad
         LOG_DBG("Could not setup %s, ch %d, err: %d", ADC_channel.dev->name, ADC_channel.channel_id, err);
         return;
     }
-
-    LOG_DBG("Setup %s, ch %d ok", ADC_channel.dev->name, ADC_channel.channel_id);
 
     (void)adc_sequence_init_dt(&ADC_channel, &sequence);
 }
