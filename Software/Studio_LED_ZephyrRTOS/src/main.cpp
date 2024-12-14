@@ -28,37 +28,52 @@ int main(void)
 	my_LED_matrix.clear();
 
 	k_sleep(K_MSEC(100));
-	while(1)
+	while (1)
 	{
 		lv_bar_set_value(ui_batteryBar, get_battery_percent(), LV_ANIM_ON);
 		lv_bar_set_value(ui_batteryBar2, get_battery_percent(), LV_ANIM_ON);
 
 		if (!strcmp(roller_str, "Rainbow"))
 		{
-			my_effect_3_single_color_rainbow.run(200, 50);
+			my_effect_3_single_color_rainbow.run(500, 20);
 		}
 		else if (!strcmp(roller_str, "Meteors"))
 		{
-			my_effect_6_meteor.run(10, 40);
+			if (new_value)
+			{
+				my_effect_6_meteor.init();
+				new_value = 0;
+			}
+			my_effect_6_meteor.run(40);
 		}
 		else if (!strcmp(roller_str, "Twinkling stars"))
 		{
-			my_effect_4_random_pixel.run(3600, 10);
+			if (new_value)
+			{
+				my_effect_4_random_pixel.init();
+				new_value = 0;
+			}
+			my_effect_4_random_pixel.run(10);
 		}
 		else if (!strcmp(roller_str, "Bouncing balls"))
 		{
-			my_effect_5_bouncing_ball.run(10, 80);
+			if (new_value)
+			{
+				my_effect_5_bouncing_ball.init();
+				new_value = 0;
+			}
+			my_effect_5_bouncing_ball.run(80);
 		}
 		else if (!strcmp(roller_str, "Digital clock"))
 		{
-			// my_effect_1_clock.run(h, m, s);
+			my_effect_2_single_color.run(0, 0, 0);
+			k_sleep(K_MSEC(10));
 		}
 		else
 		{
 			my_effect_2_single_color.run(0, 0, 0);
+			k_sleep(K_MSEC(10));
 		}
-
-		k_sleep(K_MSEC(10));
 	}
 	return 0;
 }

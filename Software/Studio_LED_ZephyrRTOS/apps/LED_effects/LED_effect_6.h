@@ -11,7 +11,8 @@ class effect_6_meteor
 {
     public:
         effect_6_meteor(LED_matrix &matrix); // Constructor accepts reference
-        void run(uint16_t timeout_sec = 10000, uint16_t time_each_step = 40);
+        void run(uint16_t time_each_step = 40);
+        void init();
 
     private:
 

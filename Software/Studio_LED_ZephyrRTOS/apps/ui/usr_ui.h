@@ -6,5 +6,6 @@
 #define USR_UI_THREAD_PRIORITY      5
 
 extern char roller_str[25];
+extern uint8_t new_value;
 
 #endif

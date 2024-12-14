@@ -9,7 +9,8 @@ class effect_5_bouncing_ball
 {
     public:
         effect_5_bouncing_ball(LED_matrix &matrix); // Constructor accepts reference
-        void run(uint16_t timeout_sec = 10000, uint16_t time_each_step = 120);
+        void init();
+        void run(uint16_t time_each_step = 120);
 
     private:
         int8_t pos[MAX_BALL*2] = {-1};

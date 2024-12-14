@@ -29,7 +29,8 @@ class effect_4_random_pixel
 {
     public:
         effect_4_random_pixel(LED_matrix &matrix); // Constructor accepts reference
-        void run(uint16_t timeout_sec = 3600, uint16_t time_each_step = 10);
+        void run(uint16_t time_each_step = 10);
+        void init();
         
     private:
         LED_pixel_struct LED_pixel[MAX_PIXEL] = {0};

@@ -10,6 +10,7 @@ LOG_MODULE_REGISTER(USR_UI, LOG_LEVEL_DBG);
 static const struct device *lvgl_keypad = DEVICE_DT_GET(DT_COMPAT_GET_ANY_STATUS_OKAY(zephyr_lvgl_keypad_input));
 
 char roller_str[25] = {0};
+uint8_t new_value;
 
 lv_group_t *screen1_group;
 lv_group_t *screen2_group;
@@ -37,6 +38,7 @@ void screen_3_init_effect(lv_event_t *e)
 
 void effects_change(lv_event_t *e)
 {
+    new_value = 1;
     lv_roller_get_selected_str(ui_effectsRoller, roller_str, sizeof(roller_str));
 }
 
