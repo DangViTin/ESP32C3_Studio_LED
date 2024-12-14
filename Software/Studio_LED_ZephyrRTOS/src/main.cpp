@@ -30,50 +30,65 @@ int main(void)
 	k_sleep(K_MSEC(100));
 	while (1)
 	{
-		lv_bar_set_value(ui_batteryBar, get_battery_percent(), LV_ANIM_ON);
-		lv_bar_set_value(ui_batteryBar2, get_battery_percent(), LV_ANIM_ON);
-
-		if (!strcmp(roller_str, "Rainbow"))
+		// Solid RGB screen
+		if (lv_scr_act() == ui_solidColor)
 		{
-			my_effect_3_single_color_rainbow.run(500, 20);
-		}
-		else if (!strcmp(roller_str, "Meteors"))
-		{
-			if (new_value)
-			{
-				my_effect_6_meteor.init();
-				new_value = 0;
-			}
-			my_effect_6_meteor.run(40);
-		}
-		else if (!strcmp(roller_str, "Twinkling stars"))
-		{
-			if (new_value)
-			{
-				my_effect_4_random_pixel.init();
-				new_value = 0;
-			}
-			my_effect_4_random_pixel.run(10);
-		}
-		else if (!strcmp(roller_str, "Bouncing balls"))
-		{
-			if (new_value)
-			{
-				my_effect_5_bouncing_ball.init();
-				new_value = 0;
-			}
-			my_effect_5_bouncing_ball.run(80);
-		}
-		else if (!strcmp(roller_str, "Digital clock"))
-		{
-			my_effect_2_single_color.run(0, 0, 0);
+			set_battery_icon_percent(get_battery_percent());
+			my_effect_2_single_color.run(
+				lv_slider_get_value(ui_redSlide) * 225 / 100,
+				lv_slider_get_value(ui_greenSlide) * 225 / 100,
+				lv_slider_get_value(ui_blueSlide) * 255 / 100);
 			k_sleep(K_MSEC(10));
 		}
+
+		// Effect screen
+		else if (lv_scr_act() == ui_effects)
+		{
+			set_battery_icon_percent(get_battery_percent());
+			if (!strcmp(roller_str_get(), "Rainbow"))
+			{
+				my_effect_3_single_color_rainbow.run(500, 20);
+			}
+			else if (!strcmp(roller_str_get(), "Meteors"))
+			{
+				if (new_effect_flag_get())
+				{
+					my_effect_6_meteor.init();
+				}
+				my_effect_6_meteor.run(40);
+			}
+			else if (!strcmp(roller_str_get(), "Stars"))
+			{
+				if (new_effect_flag_get())
+				{
+					my_effect_4_random_pixel.init();
+				}
+				my_effect_4_random_pixel.run(10);
+			}
+			else if (!strcmp(roller_str_get(), "Balls"))
+			{
+				if (new_effect_flag_get())
+				{
+					my_effect_5_bouncing_ball.init();
+				}
+				my_effect_5_bouncing_ball.run(80);
+			}
+			else if (!strcmp(roller_str_get(), "Clock"))
+			{
+				my_effect_1_clock.run(11, 11, 11);
+				k_sleep(K_MSEC(10));
+			}
+		}
+
+		// main screen
 		else
 		{
+			set_battery_icon_percent(get_battery_percent());
 			my_effect_2_single_color.run(0, 0, 0);
 			k_sleep(K_MSEC(10));
 		}
+
+		k_sleep(K_MSEC(1));
 	}
 	return 0;
 }

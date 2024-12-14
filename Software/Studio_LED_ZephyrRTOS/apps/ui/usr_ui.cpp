@@ -9,42 +9,119 @@ LOG_MODULE_REGISTER(USR_UI, LOG_LEVEL_DBG);
 
 static const struct device *lvgl_keypad = DEVICE_DT_GET(DT_COMPAT_GET_ANY_STATUS_OKAY(zephyr_lvgl_keypad_input));
 
-char roller_str[25] = {0};
-uint8_t new_value;
+static class ui_control ui_control;
 
 lv_group_t *screen1_group;
 lv_group_t *screen2_group;
 lv_group_t *screen3_group;
 
-void set_input_screen_1(lv_event_t *e)
+void screen_1_start_load(lv_event_t *e)
 {
     lv_indev_set_group(lvgl_input_get_indev(lvgl_keypad), screen1_group);
 }
 
-void set_input_screen_2(lv_event_t *e)
+void screen_2_start_load(lv_event_t *e)
 {
     lv_indev_set_group(lvgl_input_get_indev(lvgl_keypad), screen2_group);
 }
 
-void set_input_screen_3(lv_event_t *e)
+void screen_3_start_load(lv_event_t *e)
 {
     lv_indev_set_group(lvgl_input_get_indev(lvgl_keypad), screen3_group);
+    lv_roller_get_selected_str(ui_effectsRoller, ui_control.roller_str_read(), ROLLER_STR_LENGHT);
 }
 
-void screen_3_init_effect(lv_event_t *e)
+void scr3_roller_key_right(lv_event_t *e)
 {
-    lv_roller_get_selected_str(ui_effectsRoller, roller_str, sizeof(roller_str));
+    ui_control.new_effect_flag_set();
+    lv_roller_get_selected_str(ui_effectsRoller, ui_control.roller_str_read(), ROLLER_STR_LENGHT);
 }
 
-void effects_change(lv_event_t *e)
+void scr3_roller_key_left(lv_event_t *e)
 {
-    new_value = 1;
-    lv_roller_get_selected_str(ui_effectsRoller, roller_str, sizeof(roller_str));
+    ui_control.new_effect_flag_set();
+    lv_roller_get_selected_str(ui_effectsRoller, ui_control.roller_str_read(), ROLLER_STR_LENGHT);
 }
 
-void screen_3_exit_effect(lv_event_t *e)
+void screen_3_start_unload(lv_event_t *e)
 {
-    memset(roller_str, 0, sizeof(roller_str));
+    memset(ui_control.roller_str_read(), 0, ROLLER_STR_LENGHT);
+}
+
+//////////////////////////////////////////////////////////////////
+
+void ui_control::new_effect_flag_set()
+{
+    new_effect_flag = 1;
+}
+
+void ui_control::new_effect_flag_clear()
+{
+    new_effect_flag = 0;
+}
+
+uint8_t ui_control::new_effect_flag_read()
+{
+    return new_effect_flag;
+}
+
+char *ui_control::roller_str_read()
+{
+    return roller_str;
+}
+
+char *roller_str_get()
+{
+    return ui_control.roller_str_read();
+}
+
+uint8_t new_effect_flag_get()
+{
+    uint8_t value = ui_control.new_effect_flag_read();
+    ui_control.new_effect_flag_clear();
+    return value;
+}
+
+void set_battery_icon_percent(uint8_t percent)
+{
+    ui_control.battery_percent_input = percent;
+}
+
+void set_battery_icon()
+{
+    if (lv_scr_act() == ui_solidColor)
+    {
+        if (ui_control.battery_percent_input < 25)
+            lv_img_set_src(ui_battery2, &ui_img_25_png);
+        else if (ui_control.battery_percent_input < 50)
+            lv_img_set_src(ui_battery2, &ui_img_50_png);
+        else if (ui_control.battery_percent_input < 75)
+            lv_img_set_src(ui_battery2, &ui_img_75_png);
+        else
+            lv_img_set_src(ui_battery2, &ui_img_100_png);
+    }
+    else if (lv_scr_act() == ui_effects)
+    {
+        if (ui_control.battery_percent_input < 25)
+            lv_img_set_src(ui_battery3, &ui_img_25_png);
+        else if (ui_control.battery_percent_input < 50)
+            lv_img_set_src(ui_battery3, &ui_img_50_png);
+        else if (ui_control.battery_percent_input < 75)
+            lv_img_set_src(ui_battery3, &ui_img_75_png);
+        else
+            lv_img_set_src(ui_battery3, &ui_img_100_png);
+    }
+    else
+    {
+        if (ui_control.battery_percent_input < 25)
+            lv_img_set_src(ui_battery1, &ui_img_25_png);
+        else if (ui_control.battery_percent_input < 50)
+            lv_img_set_src(ui_battery1, &ui_img_50_png);
+        else if (ui_control.battery_percent_input < 75)
+            lv_img_set_src(ui_battery1, &ui_img_75_png);
+        else
+            lv_img_set_src(ui_battery1, &ui_img_100_png);
+    }
 }
 
 void usr_ui_thread_main()
@@ -60,7 +137,6 @@ void usr_ui_thread_main()
 
     // Can only add after ui_init
     lv_group_add_obj(screen1_group, ui_nextBtn1);
-    lv_group_add_obj(screen1_group, ui_FanSwitch);
 
     lv_group_add_obj(screen2_group, ui_redSlide);
     lv_group_add_obj(screen2_group, ui_greenSlide);
@@ -75,8 +151,9 @@ void usr_ui_thread_main()
 
     while (1)
     {
-        lv_task_handler();
         k_sleep(K_MSEC(USR_UI_INTERVAL_MS));
+        set_battery_icon();
+        lv_task_handler();
     }
 }
 

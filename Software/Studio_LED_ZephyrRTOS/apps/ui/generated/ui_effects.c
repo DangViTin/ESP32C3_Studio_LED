@@ -29,17 +29,12 @@ void ui_effects_screen_init(void)
     lv_obj_set_style_outline_width(ui_nextBtn3, 0, LV_PART_MAIN | LV_STATE_FOCUS_KEY);
     lv_obj_set_style_outline_pad(ui_nextBtn3, 0, LV_PART_MAIN | LV_STATE_FOCUS_KEY);
 
-    ui_batteryBar2 = ui_batteryBar_create(ui_effects);
-    lv_obj_set_x(ui_batteryBar2, -1);
-    lv_obj_set_y(ui_batteryBar2, 11);
-
     ui_effectsRoller = lv_roller_create(ui_effects);
-    lv_roller_set_options(ui_effectsRoller, "Rainbow\nMeteors\nTwinkling stars\nBouncing balls\nDigital clock",
-                          LV_ROLLER_MODE_INFINITE);
-    lv_obj_set_width(ui_effectsRoller, 118);
-    lv_obj_set_height(ui_effectsRoller, 19);
-    lv_obj_set_x(ui_effectsRoller, 0);
-    lv_obj_set_y(ui_effectsRoller, -5);
+    lv_roller_set_options(ui_effectsRoller, "Rainbow\nMeteors\nStars\nBalls\nClock", LV_ROLLER_MODE_INFINITE);
+    lv_obj_set_width(ui_effectsRoller, 87);
+    lv_obj_set_height(ui_effectsRoller, 16);
+    lv_obj_set_x(ui_effectsRoller, -8);
+    lv_obj_set_y(ui_effectsRoller, 0);
     lv_obj_set_align(ui_effectsRoller, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_effectsRoller, LV_OBJ_FLAG_CHECKABLE);     /// Flags
     lv_obj_clear_flag(ui_effectsRoller, LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_GESTURE_BUBBLE |
@@ -62,9 +57,23 @@ void ui_effects_screen_init(void)
 
     lv_obj_set_style_text_color(ui_effectsRoller, lv_color_hex(0xFFFFFF), LV_PART_SELECTED | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_effectsRoller, 255, LV_PART_SELECTED | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_effectsRoller, &lv_font_montserrat_14, LV_PART_SELECTED | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_effectsRoller, &lv_font_montserrat_16, LV_PART_SELECTED | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_color(ui_effectsRoller, lv_color_hex(0xFFFFFF), LV_PART_SELECTED | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_effectsRoller, 0, LV_PART_SELECTED | LV_STATE_DEFAULT);
+
+    ui_battery3 = lv_img_create(ui_effects);
+    lv_img_set_src(ui_battery3, &ui_img_50_png);
+    lv_obj_set_width(ui_battery3, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_battery3, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_battery3, 54);
+    lv_obj_set_y(ui_battery3, 0);
+    lv_obj_set_align(ui_battery3, LV_ALIGN_CENTER);
+    lv_obj_clear_flag(ui_battery3, LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_GESTURE_BUBBLE |
+                      LV_OBJ_FLAG_SNAPPABLE | LV_OBJ_FLAG_SCROLLABLE | LV_OBJ_FLAG_SCROLL_ELASTIC | LV_OBJ_FLAG_SCROLL_MOMENTUM |
+                      LV_OBJ_FLAG_SCROLL_CHAIN);     /// Flags
+    lv_img_set_angle(ui_battery3, -900);
+    lv_obj_set_style_img_recolor(ui_battery3, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_img_recolor_opa(ui_battery3, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     lv_obj_add_event_cb(ui_nextBtn3, ui_event_nextBtn3, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_effectsRoller, ui_event_effectsRoller, LV_EVENT_ALL, NULL);

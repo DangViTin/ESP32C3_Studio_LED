@@ -34,9 +34,8 @@ extern lv_obj_t * ui_main;
 void ui_event_nextBtn1(lv_event_t * e);
 extern lv_obj_t * ui_nextBtn1;
 extern lv_obj_t * ui_connectionStatusLabel;
-extern lv_obj_t * ui_batteryBar;
-extern lv_obj_t * ui_FanSwitch;
 extern lv_obj_t * ui_connectionStatus;
+extern lv_obj_t * ui_battery1;
 // CUSTOM VARIABLES
 
 // SCREEN: ui_solidColor
@@ -54,6 +53,7 @@ extern lv_obj_t * ui_blueSlide;
 extern lv_obj_t * ui_redLabel;
 extern lv_obj_t * ui_greenLabel;
 extern lv_obj_t * ui_blueLabel;
+extern lv_obj_t * ui_battery2;
 // CUSTOM VARIABLES
 
 // SCREEN: ui_effects
@@ -62,9 +62,9 @@ void ui_event_effects(lv_event_t * e);
 extern lv_obj_t * ui_effects;
 void ui_event_nextBtn3(lv_event_t * e);
 extern lv_obj_t * ui_nextBtn3;
-extern lv_obj_t * ui_batteryBar2;
 void ui_event_effectsRoller(lv_event_t * e);
 extern lv_obj_t * ui_effectsRoller;
+extern lv_obj_t * ui_battery3;
 // CUSTOM VARIABLES
 
 // EVENTS
@@ -72,11 +72,13 @@ extern lv_obj_t * ui_effectsRoller;
 extern lv_obj_t * ui____initial_actions0;
 
 // IMAGES AND IMAGE SETS
-LV_IMG_DECLARE(ui_img_fan_off_png);    // assets/fan_off.png
-LV_IMG_DECLARE(ui_img_fan_on_png);    // assets/fan_on.png
 LV_IMG_DECLARE(ui_img_bluetooth_disconnected_png);    // assets/bluetooth_disconnected.png
 LV_IMG_DECLARE(ui_img_bluetooth_connected_png);    // assets/bluetooth_connected.png
+LV_IMG_DECLARE(ui_img_50_png);    // assets/50.png
 LV_IMG_DECLARE(ui_img_8x8_dot_png);    // assets/8x8_dot.png
+LV_IMG_DECLARE(ui_img_25_png);    // assets/25.png
+LV_IMG_DECLARE(ui_img_75_png);    // assets/75.png
+LV_IMG_DECLARE(ui_img_100_png);    // assets/100.png
 
 // UI INIT
 void ui_init(void);

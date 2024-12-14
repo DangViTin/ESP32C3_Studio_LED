@@ -10,12 +10,12 @@
 extern "C" {
 #endif
 
-void set_input_screen_1(lv_event_t * e);
-void set_input_screen_2(lv_event_t * e);
-void set_input_screen_3(lv_event_t * e);
-void screen_3_init_effect(lv_event_t * e);
-void screen_3_exit_effect(lv_event_t * e);
-void effects_change(lv_event_t * e);
+void screen_1_start_load(lv_event_t * e);
+void screen_2_start_load(lv_event_t * e);
+void screen_3_start_load(lv_event_t * e);
+void screen_3_start_unload(lv_event_t * e);
+void scr3_roller_key_left(lv_event_t * e);
+void scr3_roller_key_right(lv_event_t * e);
 
 #ifdef __cplusplus
 } /*extern "C"*/

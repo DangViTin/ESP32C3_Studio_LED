@@ -16,9 +16,8 @@ lv_obj_t * ui_main;
 void ui_event_nextBtn1(lv_event_t * e);
 lv_obj_t * ui_nextBtn1;
 lv_obj_t * ui_connectionStatusLabel;
-lv_obj_t * ui_batteryBar;
-lv_obj_t * ui_FanSwitch;
 lv_obj_t * ui_connectionStatus;
+lv_obj_t * ui_battery1;
 // CUSTOM VARIABLES
 
 
@@ -37,6 +36,7 @@ lv_obj_t * ui_blueSlide;
 lv_obj_t * ui_redLabel;
 lv_obj_t * ui_greenLabel;
 lv_obj_t * ui_blueLabel;
+lv_obj_t * ui_battery2;
 // CUSTOM VARIABLES
 
 
@@ -46,15 +46,16 @@ void ui_event_effects(lv_event_t * e);
 lv_obj_t * ui_effects;
 void ui_event_nextBtn3(lv_event_t * e);
 lv_obj_t * ui_nextBtn3;
-lv_obj_t * ui_batteryBar2;
 void ui_event_effectsRoller(lv_event_t * e);
 lv_obj_t * ui_effectsRoller;
+lv_obj_t * ui_battery3;
 // CUSTOM VARIABLES
 
 // EVENTS
 lv_obj_t * ui____initial_actions0;
 
 // IMAGES AND IMAGE SETS
+const lv_img_dsc_t * ui_imgset_[4] = {&ui_img_25_png, &ui_img_50_png, &ui_img_75_png, &ui_img_100_png};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 // #if LV_COLOR_DEPTH != 8
@@ -72,7 +73,7 @@ void ui_event_main(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_SCREEN_LOAD_START) {
-        set_input_screen_1(e);
+        screen_1_start_load(e);
     }
 }
 
@@ -90,7 +91,7 @@ void ui_event_solidColor(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_SCREEN_LOAD_START) {
-        set_input_screen_2(e);
+        screen_2_start_load(e);
     }
 }
 
@@ -138,13 +139,10 @@ void ui_event_effects(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_SCREEN_LOAD_START) {
-        set_input_screen_3(e);
-    }
-    if(event_code == LV_EVENT_SCREEN_LOADED) {
-        screen_3_init_effect(e);
+        screen_3_start_load(e);
     }
     if(event_code == LV_EVENT_SCREEN_UNLOAD_START) {
-        screen_3_exit_effect(e);
+        screen_3_start_unload(e);
     }
 }
 
@@ -161,8 +159,11 @@ void ui_event_effectsRoller(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
 
-    if(event_code == LV_EVENT_VALUE_CHANGED) {
-        effects_change(e);
+    if(event_code == LV_EVENT_KEY &&  lv_event_get_key(e) == LV_KEY_LEFT) {
+        scr3_roller_key_left(e);
+    }
+    if(event_code == LV_EVENT_KEY &&  lv_event_get_key(e) == LV_KEY_RIGHT) {
+        scr3_roller_key_right(e);
     }
 }
 
