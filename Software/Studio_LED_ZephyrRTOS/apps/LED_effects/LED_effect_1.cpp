@@ -3,11 +3,12 @@
 
 effect_1_clock::effect_1_clock(LED_matrix &matrix) : matrix_ref(matrix) 
 {
-
 }
 
 void effect_1_clock::run(uint8_t hr, uint8_t min, uint8_t sec)
 {
+    matrix_ref.clear_all_pixels();
+    
     // Draw numbers
     matrix_ref.set_array(&font5x8[hr / 10][0], FONT5X8_WIDHT, FONT5X8_HEIGHT, 0, 2, CLOCK_LEDS_COLOR);
     matrix_ref.set_array(&font5x8[hr % 10][0], FONT5X8_WIDHT, FONT5X8_HEIGHT, 4, 2, CLOCK_LEDS_COLOR);

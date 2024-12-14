@@ -14,7 +14,6 @@ static class battery_monitoring battery_monitoring(adc_battery);
 
 battery_monitoring::battery_monitoring(analog_digital_converter &obj) : obj_ref(obj)
 {
-    ;
 }
 
 void battery_monitoring::init()

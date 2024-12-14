@@ -53,7 +53,6 @@ void effect_3_single_color_rainbow::run(uint16_t fade_step, uint16_t time_each_s
     }
     else
     {
-        matrix_ref.fill(round(current_color.r), round(current_color.g), round(current_color.b));
         i = 0;
     }
 }
