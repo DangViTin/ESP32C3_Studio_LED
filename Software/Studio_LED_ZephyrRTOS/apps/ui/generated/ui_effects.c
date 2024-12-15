@@ -75,6 +75,20 @@ void ui_effects_screen_init(void)
     lv_obj_set_style_img_recolor(ui_battery3, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_img_recolor_opa(ui_battery3, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
+    ui_charge3 = lv_img_create(ui_effects);
+    lv_img_set_src(ui_charge3, &ui_img_charge_png);
+    lv_obj_set_width(ui_charge3, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_charge3, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_charge3, 42);
+    lv_obj_set_y(ui_charge3, -7);
+    lv_obj_set_align(ui_charge3, LV_ALIGN_CENTER);
+    lv_obj_clear_flag(ui_charge3, LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_GESTURE_BUBBLE |
+                      LV_OBJ_FLAG_SNAPPABLE | LV_OBJ_FLAG_SCROLLABLE | LV_OBJ_FLAG_SCROLL_ELASTIC | LV_OBJ_FLAG_SCROLL_MOMENTUM |
+                      LV_OBJ_FLAG_SCROLL_CHAIN);     /// Flags
+    lv_img_set_angle(ui_charge3, 0);
+    lv_obj_set_style_img_recolor(ui_charge3, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_img_recolor_opa(ui_charge3, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+
     lv_obj_add_event_cb(ui_nextBtn3, ui_event_nextBtn3, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_effectsRoller, ui_event_effectsRoller, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_effects, ui_event_effects, LV_EVENT_ALL, NULL);

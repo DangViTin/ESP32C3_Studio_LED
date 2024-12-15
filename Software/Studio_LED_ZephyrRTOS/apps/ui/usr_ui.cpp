@@ -87,40 +87,55 @@ void set_battery_icon_percent(uint8_t percent)
     ui_control.battery_percent_input = percent;
 }
 
+void battery_is_charging(uint8_t is_charging)
+{
+    ui_control.is_charging = is_charging;
+}
+
 void set_battery_icon()
 {
-    if (lv_scr_act() == ui_solidColor)
+    if (ui_control.is_charging)
     {
-        if (ui_control.battery_percent_input < 25)
-            lv_img_set_src(ui_battery2, &ui_img_25_png);
-        else if (ui_control.battery_percent_input < 50)
-            lv_img_set_src(ui_battery2, &ui_img_50_png);
-        else if (ui_control.battery_percent_input < 75)
-            lv_img_set_src(ui_battery2, &ui_img_75_png);
-        else
-            lv_img_set_src(ui_battery2, &ui_img_100_png);
-    }
-    else if (lv_scr_act() == ui_effects)
-    {
-        if (ui_control.battery_percent_input < 25)
-            lv_img_set_src(ui_battery3, &ui_img_25_png);
-        else if (ui_control.battery_percent_input < 50)
-            lv_img_set_src(ui_battery3, &ui_img_50_png);
-        else if (ui_control.battery_percent_input < 75)
-            lv_img_set_src(ui_battery3, &ui_img_75_png);
-        else
-            lv_img_set_src(ui_battery3, &ui_img_100_png);
+        lv_obj_clear_flag(ui_charge1, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_clear_flag(ui_charge2, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_clear_flag(ui_charge3, LV_OBJ_FLAG_HIDDEN);
     }
     else
     {
-        if (ui_control.battery_percent_input < 25)
-            lv_img_set_src(ui_battery1, &ui_img_25_png);
-        else if (ui_control.battery_percent_input < 50)
-            lv_img_set_src(ui_battery1, &ui_img_50_png);
-        else if (ui_control.battery_percent_input < 75)
-            lv_img_set_src(ui_battery1, &ui_img_75_png);
-        else
-            lv_img_set_src(ui_battery1, &ui_img_100_png);
+        lv_obj_add_flag(ui_charge1, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_add_flag(ui_charge2, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_add_flag(ui_charge3, LV_OBJ_FLAG_HIDDEN);
+    }
+
+    if (ui_control.battery_percent_input < 5)
+    {
+        lv_img_set_src(ui_battery1, &ui_img_0_png);
+        lv_img_set_src(ui_battery2, &ui_img_0_png);
+        lv_img_set_src(ui_battery3, &ui_img_0_png);
+    }
+    else if (ui_control.battery_percent_input < 25)
+    {
+        lv_img_set_src(ui_battery1, &ui_img_25_png);
+        lv_img_set_src(ui_battery2, &ui_img_25_png);
+        lv_img_set_src(ui_battery3, &ui_img_25_png);
+    }
+    else if (ui_control.battery_percent_input < 50)
+    {
+        lv_img_set_src(ui_battery1, &ui_img_50_png);
+        lv_img_set_src(ui_battery2, &ui_img_50_png);
+        lv_img_set_src(ui_battery3, &ui_img_50_png);
+    }
+    else if (ui_control.battery_percent_input < 75)
+    {
+        lv_img_set_src(ui_battery1, &ui_img_75_png);
+        lv_img_set_src(ui_battery2, &ui_img_75_png);
+        lv_img_set_src(ui_battery3, &ui_img_75_png);
+    }
+    else
+    {
+        lv_img_set_src(ui_battery1, &ui_img_100_png);
+        lv_img_set_src(ui_battery2, &ui_img_100_png);
+        lv_img_set_src(ui_battery3, &ui_img_100_png);
     }
 }
 

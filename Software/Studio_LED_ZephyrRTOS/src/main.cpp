@@ -34,6 +34,7 @@ int main(void)
 		if (lv_scr_act() == ui_solidColor)
 		{
 			set_battery_icon_percent(get_battery_percent());
+			battery_is_charging(get_charging_status());
 			my_effect_2_single_color.run(
 				lv_slider_get_value(ui_redSlide) * 225 / 100,
 				lv_slider_get_value(ui_greenSlide) * 225 / 100,
@@ -45,6 +46,7 @@ int main(void)
 		else if (lv_scr_act() == ui_effects)
 		{
 			set_battery_icon_percent(get_battery_percent());
+			battery_is_charging(get_charging_status());
 			if (!strcmp(roller_str_get(), "Rainbow"))
 			{
 				my_effect_3_single_color_rainbow.run(500, 20);
@@ -78,17 +80,20 @@ int main(void)
 				my_effect_1_clock.run(11, 11, 11);
 				k_sleep(K_MSEC(10));
 			}
+			else
+			{
+				k_sleep(K_MSEC(10));
+			}
 		}
 
 		// main screen
 		else
 		{
 			set_battery_icon_percent(get_battery_percent());
+			battery_is_charging(get_charging_status());
 			my_effect_2_single_color.run(0, 0, 0);
 			k_sleep(K_MSEC(10));
 		}
-
-		k_sleep(K_MSEC(1));
 	}
 	return 0;
 }

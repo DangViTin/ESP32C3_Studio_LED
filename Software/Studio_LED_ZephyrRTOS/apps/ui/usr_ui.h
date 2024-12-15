@@ -15,6 +15,7 @@ class ui_control
         char *roller_str_read();
 
         uint8_t battery_percent_input;
+        uint8_t is_charging;
     private:
         uint8_t new_effect_flag;
         char roller_str[ROLLER_STR_LENGHT];
@@ -23,5 +24,6 @@ class ui_control
 uint8_t new_effect_flag_get();
 char *roller_str_get();
 void set_battery_icon_percent(uint8_t percent);
+void battery_is_charging(uint8_t is_charging);
 
 #endif

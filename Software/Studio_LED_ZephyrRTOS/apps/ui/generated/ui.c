@@ -18,6 +18,7 @@ lv_obj_t * ui_nextBtn1;
 lv_obj_t * ui_connectionStatusLabel;
 lv_obj_t * ui_connectionStatus;
 lv_obj_t * ui_battery1;
+lv_obj_t * ui_charge1;
 // CUSTOM VARIABLES
 
 
@@ -37,6 +38,7 @@ lv_obj_t * ui_redLabel;
 lv_obj_t * ui_greenLabel;
 lv_obj_t * ui_blueLabel;
 lv_obj_t * ui_battery2;
+lv_obj_t * ui_charge2;
 // CUSTOM VARIABLES
 
 
@@ -49,13 +51,14 @@ lv_obj_t * ui_nextBtn3;
 void ui_event_effectsRoller(lv_event_t * e);
 lv_obj_t * ui_effectsRoller;
 lv_obj_t * ui_battery3;
+lv_obj_t * ui_charge3;
 // CUSTOM VARIABLES
 
 // EVENTS
 lv_obj_t * ui____initial_actions0;
 
 // IMAGES AND IMAGE SETS
-const lv_img_dsc_t * ui_imgset_[4] = {&ui_img_25_png, &ui_img_50_png, &ui_img_75_png, &ui_img_100_png};
+const lv_img_dsc_t * ui_imgset_[5] = {&ui_img_0_png, &ui_img_25_png, &ui_img_50_png, &ui_img_75_png, &ui_img_100_png};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 // #if LV_COLOR_DEPTH != 8
