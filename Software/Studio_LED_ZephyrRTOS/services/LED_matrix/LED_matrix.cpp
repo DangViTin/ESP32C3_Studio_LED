@@ -1,7 +1,6 @@
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
 #include <zephyr/drivers/led_strip.h>
-#include <zephyr/drivers/gpio.h>
 
 #include "LED_matrix.h"
 
@@ -9,11 +8,9 @@ LOG_MODULE_REGISTER(LED_matrix, LOG_LEVEL_DBG);
 
 void LED_matrix::init()
 {
-    LED_enable_pin = GPIO_DT_SPEC_GET(DT_NODELABEL(led_strip_enable), gpios);
     strip = DEVICE_DT_GET(STRIP_NODE);
 
     static_assert(STRIP_NUM_PIXELS == (LED_PANEL_WIDTH * NUMBER_OF_LED_PANEL) * LED_PANEL_HEIGHT, "Number of LED in device tree is different with number of LED in matrix");
-    gpio_pin_configure_dt(&LED_enable_pin, GPIO_OUTPUT_LOW);
 
     if (device_is_ready(strip))
     {
@@ -23,16 +20,6 @@ void LED_matrix::init()
     {
 		LOG_ERR("LED strip device %s is not ready", strip->name);
 	}
-}
-
-void LED_matrix::power_enable()
-{
-    gpio_pin_set_dt(&LED_enable_pin, 1);
-}
-
-void LED_matrix::power_disable()
-{
-    gpio_pin_set_dt(&LED_enable_pin, 0);
 }
 
 //                  Panel 1                                     Panel 0

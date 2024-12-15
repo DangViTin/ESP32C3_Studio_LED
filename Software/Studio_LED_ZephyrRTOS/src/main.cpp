@@ -24,7 +24,6 @@ effect_6_meteor my_effect_6_meteor(my_LED_matrix);
 int main(void)
 {
 	my_LED_matrix.init();
-	my_LED_matrix.power_enable();
 	my_LED_matrix.clear();
 
 	k_sleep(K_MSEC(100));

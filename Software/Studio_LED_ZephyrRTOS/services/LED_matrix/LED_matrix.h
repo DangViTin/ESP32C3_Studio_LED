@@ -21,8 +21,6 @@ class LED_matrix
         int set_array(uint8_t const *array, uint8_t x_len, uint8_t y_len, uint8_t x, uint8_t y, uint8_t r, uint8_t g, uint8_t b);
         void fill(uint8_t r, uint8_t g, uint8_t b);
         void clear();
-        void power_enable();
-        void power_disable();
 
         const struct device *strip;
         struct led_rgb pixels[STRIP_NUM_PIXELS] = {0};
