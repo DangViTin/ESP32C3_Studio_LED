@@ -75,7 +75,7 @@ void effect_6_meteor::run(uint16_t time_each_step)
 
     for (uint8_t i = 0; i < MAX_METEOR; i++)
     {
-        // Delete out of bonds obj
+        // Delete out of bound obj
         if (meteor[i].pos_y < -(METEOR_TAIL_LENGTH - 1))
         {
             pos[i] = -1;
