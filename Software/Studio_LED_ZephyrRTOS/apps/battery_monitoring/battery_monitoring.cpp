@@ -25,7 +25,7 @@ void battery_monitoring::init()
 uint32_t battery_monitoring::measure()
 {
     measurement_voltage = obj_ref.read_voltage() * BATTERY_ADC_RATIO;
-    LOG_INF("Battery measurement voltage: %d mV", measurement_voltage);
+    LOG_DBG("Battery measurement voltage: %d mV", measurement_voltage);
     return measurement_voltage;
 }
 
