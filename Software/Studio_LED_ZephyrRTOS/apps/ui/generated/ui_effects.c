@@ -33,7 +33,7 @@ void ui_effects_screen_init(void)
     lv_roller_set_options(ui_effectsRoller, "Rainbow\nMeteors\nStars\nBalls\nClock", LV_ROLLER_MODE_INFINITE);
     lv_obj_set_width(ui_effectsRoller, 87);
     lv_obj_set_height(ui_effectsRoller, 16);
-    lv_obj_set_x(ui_effectsRoller, -8);
+    lv_obj_set_x(ui_effectsRoller, -11);
     lv_obj_set_y(ui_effectsRoller, 0);
     lv_obj_set_align(ui_effectsRoller, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_effectsRoller, LV_OBJ_FLAG_CHECKABLE);     /// Flags
@@ -85,7 +85,6 @@ void ui_effects_screen_init(void)
     lv_obj_clear_flag(ui_charge3, LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_GESTURE_BUBBLE |
                       LV_OBJ_FLAG_SNAPPABLE | LV_OBJ_FLAG_SCROLLABLE | LV_OBJ_FLAG_SCROLL_ELASTIC | LV_OBJ_FLAG_SCROLL_MOMENTUM |
                       LV_OBJ_FLAG_SCROLL_CHAIN);     /// Flags
-    lv_img_set_angle(ui_charge3, 0);
     lv_obj_set_style_img_recolor(ui_charge3, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_img_recolor_opa(ui_charge3, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 

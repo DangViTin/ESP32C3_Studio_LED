@@ -87,6 +87,9 @@ void ui_event_nextBtn1(lv_event_t * e)
     if(event_code == LV_EVENT_KEY &&  lv_event_get_key(e) == LV_KEY_RIGHT) {
         _ui_screen_change(&ui_solidColor, LV_SCR_LOAD_ANIM_MOVE_TOP, 500, 0, &ui_solidColor_screen_init);
     }
+    if(event_code == LV_EVENT_KEY &&  lv_event_get_key(e) == LV_KEY_LEFT) {
+        _ui_screen_change(&ui_effects, LV_SCR_LOAD_ANIM_MOVE_BOTTOM, 500, 0, &ui_effects_screen_init);
+    }
 }
 
 void ui_event_solidColor(lv_event_t * e)
@@ -105,6 +108,9 @@ void ui_event_nextBtn2(lv_event_t * e)
     if(event_code == LV_EVENT_KEY &&  lv_event_get_key(e) == LV_KEY_RIGHT) {
         _ui_screen_change(&ui_effects, LV_SCR_LOAD_ANIM_MOVE_TOP, 500, 0, &ui_effects_screen_init);
     }
+    if(event_code == LV_EVENT_KEY &&  lv_event_get_key(e) == LV_KEY_LEFT) {
+        _ui_screen_change(&ui_main, LV_SCR_LOAD_ANIM_MOVE_BOTTOM, 500, 0, &ui_main_screen_init);
+    }
 }
 
 void ui_event_redSlide(lv_event_t * e)
@@ -113,7 +119,7 @@ void ui_event_redSlide(lv_event_t * e)
     lv_obj_t * target = lv_event_get_target(e);
 
     if(event_code == LV_EVENT_VALUE_CHANGED) {
-        _ui_slider_set_text_value(ui_redLabel, target, "R. ", "");
+        _ui_slider_set_text_value(ui_redLabel, target, "R.", "");
     }
 }
 
@@ -123,7 +129,7 @@ void ui_event_greenSlide(lv_event_t * e)
     lv_obj_t * target = lv_event_get_target(e);
 
     if(event_code == LV_EVENT_VALUE_CHANGED) {
-        _ui_slider_set_text_value(ui_greenLabel, target, "G. ", "");
+        _ui_slider_set_text_value(ui_greenLabel, target, "G.", "");
     }
 }
 
@@ -133,7 +139,7 @@ void ui_event_blueSlide(lv_event_t * e)
     lv_obj_t * target = lv_event_get_target(e);
 
     if(event_code == LV_EVENT_VALUE_CHANGED) {
-        _ui_slider_set_text_value(ui_blueLabel, target, "B. ", "");
+        _ui_slider_set_text_value(ui_blueLabel, target, "B.", "");
     }
 }
 
@@ -155,6 +161,9 @@ void ui_event_nextBtn3(lv_event_t * e)
 
     if(event_code == LV_EVENT_KEY &&  lv_event_get_key(e) == LV_KEY_RIGHT) {
         _ui_screen_change(&ui_main, LV_SCR_LOAD_ANIM_MOVE_TOP, 500, 0, &ui_main_screen_init);
+    }
+    if(event_code == LV_EVENT_KEY &&  lv_event_get_key(e) == LV_KEY_LEFT) {
+        _ui_screen_change(&ui_solidColor, LV_SCR_LOAD_ANIM_MOVE_BOTTOM, 500, 0, &ui_solidColor_screen_init);
     }
 }
 
