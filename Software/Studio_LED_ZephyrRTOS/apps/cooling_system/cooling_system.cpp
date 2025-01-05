@@ -66,7 +66,7 @@ void cooling_system_thread_main()
         // No thermal sensor, auto mode will not be implemented, fixed value for fan speed
         if (cooling_system.get_mode() == auto_mode) 
         {
-            cooling_system.set_freq_and_duty(100, 50);
+            cooling_system.set_freq_and_duty(300, 80);
             cooling_system.apply_freq_and_duty();
         }
         else

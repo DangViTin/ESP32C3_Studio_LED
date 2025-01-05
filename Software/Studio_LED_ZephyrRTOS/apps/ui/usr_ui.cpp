@@ -17,6 +17,7 @@ lv_group_t *screen3_group;
 
 void screen_1_start_load(lv_event_t *e)
 {
+    ui_control.new_effect_flag_set();
     lv_indev_set_group(lvgl_input_get_indev(lvgl_keypad), screen1_group);
 }
 
@@ -27,6 +28,7 @@ void screen_2_start_load(lv_event_t *e)
 
 void screen_3_start_load(lv_event_t *e)
 {
+    ui_control.new_effect_flag_set();
     lv_indev_set_group(lvgl_input_get_indev(lvgl_keypad), screen3_group);
     lv_roller_get_selected_str(ui_effectsRoller, ui_control.roller_str_read(), ROLLER_STR_LENGHT);
 }
