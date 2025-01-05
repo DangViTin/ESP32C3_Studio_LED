@@ -270,6 +270,82 @@
                   }
                 ],
                 "InheritedType": 4
+              },
+              {
+                "disabled": false,
+                "nid": 1001146,
+                "strtype": "_event/EventHandler",
+                "strval": "KEY_LEFT(KEY)",
+                "childs": [
+                  {
+                    "nid": 1001147,
+                    "strtype": "_event/name",
+                    "strval": "preScreen1",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": 1001148,
+                    "strtype": "_event/condition_C",
+                    "strval": "",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": 1001149,
+                    "strtype": "_event/condition_P",
+                    "strval": "",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": 1001156,
+                    "strtype": "_event/action",
+                    "strval": "CHANGE SCREEN",
+                    "childs": [
+                      {
+                        "nid": 1001157,
+                        "strtype": "CHANGE SCREEN/Name",
+                        "strval": "CHANGE SCREEN",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 1001158,
+                        "strtype": "CHANGE SCREEN/Call",
+                        "strval": "ChangeScreen( <{Screen_to}>, lv.SCR_LOAD_ANIM.<{Fade_mode}>, <{Speed}>, <{Delay}>)",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 1001159,
+                        "strtype": "CHANGE SCREEN/CallC",
+                        "strval": "_ui_screen_change( &<{Screen_to}>, LV_SCR_LOAD_ANIM_<{Fade_mode}>, <{Speed}>, <{Delay}>, &<{Screen_to}>_screen_init);",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 1001160,
+                        "strtype": "CHANGE SCREEN/Screen_to",
+                        "strval": "GUID93866957-172772S6303337",
+                        "InheritedType": 9
+                      },
+                      {
+                        "nid": 1001161,
+                        "strtype": "CHANGE SCREEN/Fade_mode",
+                        "strval": "MOVE_BOTTOM",
+                        "InheritedType": 3
+                      },
+                      {
+                        "nid": 1001162,
+                        "strtype": "CHANGE SCREEN/Speed",
+                        "integer": 500,
+                        "InheritedType": 6
+                      },
+                      {
+                        "nid": 1001163,
+                        "strtype": "CHANGE SCREEN/Delay",
+                        "InheritedType": 6
+                      }
+                    ],
+                    "InheritedType": 10
+                  }
+                ],
+                "InheritedType": 4
               }
             ],
             "saved_objtypeKey": "BUTTON"
@@ -1552,6 +1628,82 @@
                   }
                 ],
                 "InheritedType": 4
+              },
+              {
+                "disabled": false,
+                "nid": 1001164,
+                "strtype": "_event/EventHandler",
+                "strval": "KEY_LEFT(KEY)",
+                "childs": [
+                  {
+                    "nid": 1001165,
+                    "strtype": "_event/name",
+                    "strval": "preScreen2",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": 1001166,
+                    "strtype": "_event/condition_C",
+                    "strval": "",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": 1001167,
+                    "strtype": "_event/condition_P",
+                    "strval": "",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": 1001168,
+                    "strtype": "_event/action",
+                    "strval": "CHANGE SCREEN",
+                    "childs": [
+                      {
+                        "nid": 1001169,
+                        "strtype": "CHANGE SCREEN/Name",
+                        "strval": "CHANGE SCREEN",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 1001170,
+                        "strtype": "CHANGE SCREEN/Call",
+                        "strval": "ChangeScreen( <{Screen_to}>, lv.SCR_LOAD_ANIM.<{Fade_mode}>, <{Speed}>, <{Delay}>)",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 1001171,
+                        "strtype": "CHANGE SCREEN/CallC",
+                        "strval": "_ui_screen_change( &<{Screen_to}>, LV_SCR_LOAD_ANIM_<{Fade_mode}>, <{Speed}>, <{Delay}>, &<{Screen_to}>_screen_init);",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 1001172,
+                        "strtype": "CHANGE SCREEN/Screen_to",
+                        "strval": "GUID2035050-172638S9093334",
+                        "InheritedType": 9
+                      },
+                      {
+                        "nid": 1001173,
+                        "strtype": "CHANGE SCREEN/Fade_mode",
+                        "strval": "MOVE_BOTTOM",
+                        "InheritedType": 3
+                      },
+                      {
+                        "nid": 1001174,
+                        "strtype": "CHANGE SCREEN/Speed",
+                        "integer": 500,
+                        "InheritedType": 6
+                      },
+                      {
+                        "nid": 1001175,
+                        "strtype": "CHANGE SCREEN/Delay",
+                        "InheritedType": 6
+                      }
+                    ],
+                    "InheritedType": 10
+                  }
+                ],
+                "InheritedType": 4
               }
             ],
             "saved_objtypeKey": "BUTTON"
@@ -1842,7 +1994,7 @@
                       {
                         "nid": 1001030,
                         "strtype": "SET TEXT VALUE FROM SLIDER/Prefix",
-                        "strval": "R. ",
+                        "strval": "R.",
                         "InheritedType": 10
                       },
                       {
@@ -2147,7 +2299,7 @@
                       {
                         "nid": 1001052,
                         "strtype": "SET TEXT VALUE FROM SLIDER/Prefix",
-                        "strval": "G. ",
+                        "strval": "G.",
                         "InheritedType": 10
                       },
                       {
@@ -2453,7 +2605,7 @@
                       {
                         "nid": 1001041,
                         "strtype": "SET TEXT VALUE FROM SLIDER/Prefix",
-                        "strval": "B. ",
+                        "strval": "B.",
                         "InheritedType": 10
                       },
                       {
@@ -3757,6 +3909,82 @@
                   }
                 ],
                 "InheritedType": 4
+              },
+              {
+                "disabled": false,
+                "nid": 1001176,
+                "strtype": "_event/EventHandler",
+                "strval": "KEY_LEFT(KEY)",
+                "childs": [
+                  {
+                    "nid": 1001177,
+                    "strtype": "_event/name",
+                    "strval": "preScreen3",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": 1001178,
+                    "strtype": "_event/condition_C",
+                    "strval": "",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": 1001179,
+                    "strtype": "_event/condition_P",
+                    "strval": "",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": 1001180,
+                    "strtype": "_event/action",
+                    "strval": "CHANGE SCREEN",
+                    "childs": [
+                      {
+                        "nid": 1001181,
+                        "strtype": "CHANGE SCREEN/Name",
+                        "strval": "CHANGE SCREEN",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 1001182,
+                        "strtype": "CHANGE SCREEN/Call",
+                        "strval": "ChangeScreen( <{Screen_to}>, lv.SCR_LOAD_ANIM.<{Fade_mode}>, <{Speed}>, <{Delay}>)",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 1001183,
+                        "strtype": "CHANGE SCREEN/CallC",
+                        "strval": "_ui_screen_change( &<{Screen_to}>, LV_SCR_LOAD_ANIM_<{Fade_mode}>, <{Speed}>, <{Delay}>, &<{Screen_to}>_screen_init);",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 1001184,
+                        "strtype": "CHANGE SCREEN/Screen_to",
+                        "strval": "GUID67304890-172757S3223337",
+                        "InheritedType": 9
+                      },
+                      {
+                        "nid": 1001185,
+                        "strtype": "CHANGE SCREEN/Fade_mode",
+                        "strval": "MOVE_BOTTOM",
+                        "InheritedType": 3
+                      },
+                      {
+                        "nid": 1001186,
+                        "strtype": "CHANGE SCREEN/Speed",
+                        "integer": 500,
+                        "InheritedType": 6
+                      },
+                      {
+                        "nid": 1001187,
+                        "strtype": "CHANGE SCREEN/Delay",
+                        "InheritedType": 6
+                      }
+                    ],
+                    "InheritedType": 10
+                  }
+                ],
+                "InheritedType": 4
               }
             ],
             "saved_objtypeKey": "BUTTON"
@@ -3801,7 +4029,7 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  -8,
+                  -11,
                   0
                 ],
                 "InheritedType": 7
@@ -4863,7 +5091,7 @@
     "uiExportFolderPath": "C:\\Users\\dangv\\OneDrive\\Project\\ESP32C3_Studio_LED\\Software\\LVGL_UI\\export",
     "projectExportFolderPath": "D:/Download/New folder/SquareLine_Project",
     "custom_variable_prefix": "uic",
-    "backup_cnt": 132,
+    "backup_cnt": 137,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.11",
     "callfuncsexport": "C_FILE",
@@ -4879,7 +5107,7 @@
     "drive_fatfs_path": "",
     "naming": "Name",
     "naming_force_lowercase": false,
-    "nidcnt": 1001142,
+    "nidcnt": 1001188,
     "BitDepth": 8,
     "Name": "SquareLine_Project"
   }
