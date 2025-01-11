@@ -1,85 +1,134 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-// import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'ble_tab.dart';
 
 Color _currentColor = Colors.blue;
-var dropdownListVal;
+String _currentEffect = "";
+String dropdownListVal = "";
+List<String> option_list = [];
 String log = "";
+const RGB_UUID = "0193fe95-239a-7f23-826d-2b53e38f42b6";
+const effect_UUID = "0193fe95-239a-7f23-826d-2b53e38f42b7";
+int alreadyRead = 0;
 
 class CtrlTab extends StatefulWidget {
   @override
   CtrlTabState createState() => CtrlTabState();
 }
 
-// class CtrlTabState extends State<CtrlTab> {
-//   String option = "Option 1\nOption 2\nOption 3";
-
-// void _changeColor(Color color) async {
-//   // Check if the color is the same as the current color to avoid unnecessary updates
-//   if (_currentColor == color) return;
-
-//   setState(() {
-//     _currentColor = color;
-//     // log += "Color changed to: $color\n";
-//   });
-
-//   // Convert the color to a list of integers (e.g., RGB values)
-//   List<int> colorData = [color.red, color.green, color.blue];
-
-//   // Send the color data to the BLE device
-//   String response = await BleTabState().sendDataToCharacteristic("0193fe95-239a-7f23-826d-2b53e38f42b6", colorData);
-//   // setState(() {
-//   //   // log += "Response: $response\n";
-//   // }
-//   // );
-// }
-
 class CtrlTabState extends State<CtrlTab> {
-  String option = "Option 1\nOption 2\nOption 3";
+  String option = "";
+  Timer? _timer;
 
   // Store the last time the color was updated
   DateTime? _lastUpdatedTime;
-  static const Duration debounceDuration = Duration(milliseconds: 100); // 100ms debounce
+  static const Duration debounceDuration =
+      Duration(milliseconds: 100); // 100ms debounce
 
   void _changeColor(Color color) async {
     final now = DateTime.now();
 
-    // Throttle updates to 100ms
+    // Limit updates to 100ms
     if (_lastUpdatedTime == null ||
         now.difference(_lastUpdatedTime!) > debounceDuration) {
       _lastUpdatedTime = now; // Update the last processed time
 
       // Check if the color is the same to avoid unnecessary updates
-      if (_currentColor == color) 
-      {
+      if (_currentColor == color) {
         return;
       }
 
-      setState(() 
-      {
+      setState(() {
         _currentColor = color;
-      }
-      );
+      });
 
       // Convert the color to a list of integers (e.g., RGB values)
       List<int> colorData = [color.red, color.green, color.blue];
 
       // Send the color data to the BLE device
-      try
-      {
-        String response = await BleTabState().sendDataToCharacteristic("0193fe95-239a-7f23-826d-2b53e38f42b6", colorData,);
+      try {
+        String response =
+            await BleTabState().sendDataToCharacteristic(RGB_UUID, colorData);
         print("Response: $response");
-      }
-      catch (e)
-      {
+      } catch (e) {
         print("Error sending data to BLE: $e");
       }
     }
   }
 
+  void _changeEffect(String effect) async {
+    // Check if the effect is the same to avoid unnecessary updates
+    if (_currentEffect == effect) {
+      return;
+    }
+
+    setState(() {
+      _currentEffect = effect;
+    });
+
+    try {
+      List<int> effectToSend = effect.codeUnits;
+      String response = await BleTabState()
+          .sendDataToCharacteristic(effect_UUID, effectToSend);
+      print("Response: $response");
+    } catch (e) {
+      print("Error sending data to BLE: $e");
+    }
+  }
+
+  void readEffect() async {
+    await BleTabState().readDatafromCharacteristic(effect_UUID);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Polling periodically
+    _timer = Timer.periodic(Duration(milliseconds: 200), (timer) {
+      if (BleTabState.connectedDevice != null && alreadyRead == 0) {
+        readEffect();
+        option = String.fromCharCodes(BleTabState.read_data);
+        log += "Read raw: ${BleTabState.read_data} \n";
+        log += "Read list: $option\n";
+
+        option_list = option.split('\n');
+        dropdownListVal = option_list.first;
+
+        if (option_list.length > 1) {
+          setState(() {
+            alreadyRead = 1;
+            _timer?.cancel();
+          });
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel(); // Cancel the timer to avoid memory leaks
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    // if (BleTabState.connectedDevice != null && alreadyRead == 0) {
+    //   readEffect();
+    //   option = String.fromCharCodes(BleTabState.read_data);
+    //   log += "Read raw: ${BleTabState.read_data} \n";
+    //   log += "Read list: $option\n";
+
+    //   option_list = option.split('\n');
+    //   dropdownListVal = option_list.first;
+
+    //   if (option_list.length > 1) {
+    //     alreadyRead = 1;
+    //   //   _timer?.cancel();
+    //   }
+    // }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF1877F2),
@@ -94,7 +143,6 @@ class CtrlTabState extends State<CtrlTab> {
               'RGB Color',
               style: TextStyle(fontSize: 30),
             ),
-            // SizedBox(height: 20),
             ColorPicker(
               pickerColor: _currentColor,
               onColorChanged: _changeColor,
@@ -129,6 +177,7 @@ class CtrlTabState extends State<CtrlTab> {
                     // Handle change here
                     setState(() {
                       dropdownListVal = newValue as String;
+                      _changeEffect(dropdownListVal);
                       // log += "Effect changed to: $dropdownListVal\n";
                     });
                   },

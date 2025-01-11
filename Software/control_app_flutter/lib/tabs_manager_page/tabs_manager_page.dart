@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:control_app_flutter/tabs_manager_page/tabs/ble_tab.dart';
 import 'package:control_app_flutter/tabs_manager_page/tabs/control_tab.dart';
-// import 'package:control_app_flutter/tabs_manager_page/tabs/setting_tab.dart';
 
 class TabsManager extends StatefulWidget {
   @override
@@ -14,7 +13,6 @@ class _TabsManagerState extends State<TabsManager> {
   final List<Widget> _tabs = [
     BleTab(),
     CtrlTab(),
-    // SettingsTab(),
   ];
 
   @override
@@ -45,10 +43,6 @@ class _TabsManagerState extends State<TabsManager> {
             icon: Icon(Icons.gamepad),
             label: 'Control',
           ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.settings),
-          //   label: 'Settings',
-          // ),
         ],
       ),
     );

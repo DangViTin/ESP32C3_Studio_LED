@@ -11,14 +11,16 @@ class BleTab extends StatefulWidget {
   BleTabState createState() => BleTabState();
 }
 
-/// The state class for the [BleTab] widget.
-class BleTabState extends State<BleTab> {
+  /// The state class for the [BleTab] widget.
+  class BleTabState extends State<BleTab> {
   /// A map to store the scan results with the device identifier as the key.
   Map<DeviceIdentifier, ScanResult> scanResults = {};
   /// A list to store all discovered characteristics.
   static List<BluetoothCharacteristic> allCharacteristics = [];
   /// The currently connected Bluetooth device.
   static BluetoothDevice? connectedDevice;
+  /// Read data
+  static List<int> read_data = [];
 
   @override
   void initState() {
@@ -62,14 +64,14 @@ class BleTabState extends State<BleTab> {
   ///
   /// [characteristic] The Bluetooth characteristic to send data to.
   /// [data] The data to send.
-  Future<String> sendDataToCharacteristic(String characteristicUuid, List<int> data) async 
+  Future<String> sendDataToCharacteristic(String characteristicUuid, List<int> dataToWrite) async 
   {
     if (connectedDevice != null) {
       try {
         for (BluetoothCharacteristic characteristic in allCharacteristics) {
           if (characteristic.uuid.toString() == characteristicUuid) {
-            await characteristic.write(data);
-            String log = "Data sent to characteristic: $data";
+            await characteristic.write(dataToWrite);
+            String log = "Data sent to characteristic: $dataToWrite";
             return log;
           }
         }
@@ -81,6 +83,36 @@ class BleTabState extends State<BleTab> {
       }
     } else {
       String log = "No device connected. Cannot send data.";
+      return log;
+    }
+  }
+
+  /// Read data from a given characteristic.
+  ///
+  /// [characteristic] The Bluetooth characteristic to read data from.
+  /// [data] read data.
+  Future<String> readDatafromCharacteristic(String characteristicUuid) async 
+  {
+    if (connectedDevice != null) {
+      try {
+        for (BluetoothCharacteristic characteristic in allCharacteristics) {
+          if (characteristic.uuid.toString() == characteristicUuid) {
+            // if (characteristic.properties.read)
+            // {
+              read_data = await characteristic.read();
+              String log = "Data read from characteristic: $read_data";
+              return log;
+            // }
+          }
+        }
+        String log = "Characteristic with UUID $characteristicUuid not found.";
+        return log;
+      } catch (e) {
+        String log = "Error reading data from characteristic: $e";
+        return log;
+      }
+    } else {
+      String log = "No device connected. Cannot read data.";
       return log;
     }
   }
