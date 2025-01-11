@@ -34,9 +34,9 @@ extern lv_obj_t * ui_main;
 void ui_event_nextBtn1(lv_event_t * e);
 extern lv_obj_t * ui_nextBtn1;
 extern lv_obj_t * ui_connectionStatusLabel;
-extern lv_obj_t * ui_connectionStatus;
 extern lv_obj_t * ui_battery1;
 extern lv_obj_t * ui_charge1;
+extern lv_obj_t * ui_connectionStatusImg;
 // CUSTOM VARIABLES
 
 // SCREEN: ui_solidColor
@@ -75,15 +75,14 @@ extern lv_obj_t * ui_charge3;
 extern lv_obj_t * ui____initial_actions0;
 
 // IMAGES AND IMAGE SETS
-LV_IMG_DECLARE(ui_img_bluetooth_disconnected_png);    // assets/bluetooth_disconnected.png
-LV_IMG_DECLARE(ui_img_bluetooth_connected_png);    // assets/bluetooth_connected.png
 LV_IMG_DECLARE(ui_img_50_png);    // assets/50.png
 LV_IMG_DECLARE(ui_img_charge_png);    // assets/charge.png
+LV_IMG_DECLARE(ui_img_bluetooth_disconnected_png);    // assets/bluetooth_disconnected.png
 LV_IMG_DECLARE(ui_img_8x8_dot_png);    // assets/8x8_dot.png
+LV_IMG_DECLARE(ui_img_0_png);    // assets/0.png
+LV_IMG_DECLARE(ui_img_100_png);    // assets/100.png
 LV_IMG_DECLARE(ui_img_25_png);    // assets/25.png
 LV_IMG_DECLARE(ui_img_75_png);    // assets/75.png
-LV_IMG_DECLARE(ui_img_100_png);    // assets/100.png
-LV_IMG_DECLARE(ui_img_0_png);    // assets/0.png
 
 // UI INIT
 void ui_init(void);
