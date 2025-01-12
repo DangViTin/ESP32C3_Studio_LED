@@ -23,7 +23,10 @@ class ui_control
 
 uint8_t new_effect_flag_get();
 char *roller_str_get();
-void set_battery_icon_percent(uint8_t percent);
-void battery_is_charging(uint8_t is_charging);
+void set_battery_percent_icon(uint8_t percent);
+void set_battery_charging_icon(uint8_t is_charging);
+void set_text_connected_status(uint8_t is_connected);
+void set_ble_icon(uint8_t is_connected);
+void set_text_passkey(uint32_t passkey);
 
 #endif

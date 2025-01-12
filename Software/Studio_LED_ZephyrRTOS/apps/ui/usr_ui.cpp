@@ -84,12 +84,43 @@ uint8_t new_effect_flag_get()
     return value;
 }
 
-void set_battery_icon_percent(uint8_t percent)
+void set_ble_icon(uint8_t is_connected)
+{
+    if (is_connected)
+    {
+        lv_img_set_src(ui_connectionStatusImg, &ui_img_bluetooth_connected_png);
+    }
+    else
+    {
+        lv_img_set_src(ui_connectionStatusImg, &ui_img_bluetooth_disconnected_png);
+    }
+}
+
+void set_text_connected_status(uint8_t is_connected)
+{
+    if (is_connected)
+    {
+        lv_label_set_text(ui_connectionStatusLabel, "Connected");
+    }
+    else
+    {
+        lv_label_set_text(ui_connectionStatusLabel, "No connect");
+    }
+}
+
+void set_text_passkey(uint32_t passkey)
+{
+    char passkey_str[7];
+    sprintf(passkey_str, "%06u", passkey);
+    lv_label_set_text(ui_connectionStatusLabel, passkey_str);
+}
+
+void set_battery_percent_icon(uint8_t percent)
 {
     ui_control.battery_percent_input = percent;
 }
 
-void battery_is_charging(uint8_t is_charging)
+void set_battery_charging_icon(uint8_t is_charging)
 {
     ui_control.is_charging = is_charging;
 }
