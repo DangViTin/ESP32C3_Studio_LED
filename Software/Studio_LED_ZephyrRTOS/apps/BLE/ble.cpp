@@ -16,12 +16,13 @@
 
 LOG_MODULE_REGISTER(usr_BLE, LOG_LEVEL_DBG);
 
-uint8_t btn_state = 0;
+static uint8_t passkey_flag = 0;
+static uint32_t security_passkey = 0;
 
 class ble_connection_status_class
 {
 private:
-    bool is_connected;
+    bool is_connected = 0;
 
 public:
     void set_connection_status();
@@ -65,6 +66,15 @@ int ble_remove_all_bonded_devices()
     return ble_connection_status.ble_remove_all_bonded_devices();
 }
 
+uint32_t ble_get_pass_code()
+{
+    if (passkey_flag)
+    {
+        return security_passkey;
+    }
+    return 0xBADC0DE;
+}
+
 // Config advertising parameters and advertising data
 #define BT_LE_ADV_CONN_NO_ACCEPT_LIST BT_LE_ADV_PARAM(BT_LE_ADV_OPT_CONN,        \
                                                       BT_GAP_ADV_FAST_INT_MIN_2, \
@@ -85,7 +95,7 @@ static const struct bt_data sd[] = {
 static void advertise(struct k_work *work)
 {
     // Add some delay to make sure free connection objects available.
-    k_sleep(K_MSEC(100));
+    k_sleep(K_MSEC(10));
 
     int err = 0;
     err = bt_le_adv_start(BT_LE_ADV_CONN_NO_ACCEPT_LIST, ad, ARRAY_SIZE(ad),
@@ -103,6 +113,8 @@ static void auth_passkey_display(struct bt_conn *conn, unsigned int passkey)
     char addr[BT_ADDR_LE_STR_LEN];
     bt_addr_le_to_str(bt_conn_get_dst(conn), addr, sizeof(addr));
     LOG_DBG("Passkey for %s: %06u", addr, passkey);
+    passkey_flag = 1;
+    security_passkey = passkey;
 }
 
 static void auth_cancel(struct bt_conn *conn)
@@ -110,6 +122,9 @@ static void auth_cancel(struct bt_conn *conn)
     char addr[BT_ADDR_LE_STR_LEN];
     bt_addr_le_to_str(bt_conn_get_dst(conn), addr, sizeof(addr));
     LOG_DBG("Pairing cancelled: %s", addr);
+    
+    passkey_flag = 0;
+    security_passkey = 0;
 }
 
 static struct bt_conn_auth_cb conn_auth_callbacks = {
@@ -187,6 +202,9 @@ static void on_disconnected(struct bt_conn *conn, uint8_t reason)
     LOG_DBG("Disconnected. Reason %d", reason);
     ble_connection_status.clear_connection_status();
     k_work_submit(&advertise_work);
+
+    passkey_flag = 0;
+    security_passkey = 0;
 }
 
 static void on_le_param_updated(struct bt_conn *conn, uint16_t interval, uint16_t latency, uint16_t timeout)
@@ -204,6 +222,9 @@ static void on_security_changed(struct bt_conn *conn, bt_security_t level, enum 
         LOG_DBG("Security changed: %s level %u", addr, level);
     else
         LOG_DBG("Security failed: %s level %u err %d", addr, level, err);
+
+    passkey_flag = 0;
+    security_passkey = 0;
 }
 
 static void on_le_data_len_updated(struct bt_conn *conn, struct bt_conn_le_data_len_info *info)
@@ -254,11 +275,8 @@ void ble_thread_main(void)
 
     settings_load();
 
-    // err = service_init(&service_callback);
     if (err)
         LOG_ERR("Failed to init Service (err:%d)", err);
-
-    ble_connection_status.ble_remove_all_bonded_devices();
 
     k_work_submit(&advertise_work);
 

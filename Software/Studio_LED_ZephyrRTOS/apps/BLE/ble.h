@@ -19,6 +19,7 @@ extern "C" {
 
 bool is_ble_connected();
 int ble_remove_all_bonded_devices();
+uint32_t ble_get_pass_code();
 
 #ifdef __cplusplus
 }
