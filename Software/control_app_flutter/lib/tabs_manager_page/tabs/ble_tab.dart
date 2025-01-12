@@ -11,16 +11,19 @@ class BleTab extends StatefulWidget {
   BleTabState createState() => BleTabState();
 }
 
-  /// The state class for the [BleTab] widget.
-  class BleTabState extends State<BleTab> {
-  /// A map to store the scan results with the device identifier as the key.
+// The state class for the [BleTab] widget.
+class BleTabState extends State<BleTab> {
+  // A map to store the scan results with the device identifier as the key.
   Map<DeviceIdentifier, ScanResult> scanResults = {};
-  /// A list to store all discovered characteristics.
+
+  // A list to store all discovered characteristics.
   static List<BluetoothCharacteristic> allCharacteristics = [];
-  /// The currently connected Bluetooth device.
+
+  // The currently connected Bluetooth device.
   static BluetoothDevice? connectedDevice;
-  /// Read data
-  static List<int> read_data = [];
+
+  // Read data
+  static List<int> readData = [];
 
   @override
   void initState() {
@@ -64,56 +67,52 @@ class BleTab extends StatefulWidget {
   ///
   /// [characteristic] The Bluetooth characteristic to send data to.
   /// [data] The data to send.
-  Future<String> sendDataToCharacteristic(String characteristicUuid, List<int> dataToWrite) async 
-  {
+  Future<int> sendDataToCharacteristic(String characteristicUuid, List<int> dataToWrite) async {
     if (connectedDevice != null) {
       try {
         for (BluetoothCharacteristic characteristic in allCharacteristics) {
           if (characteristic.uuid.toString() == characteristicUuid) {
             await characteristic.write(dataToWrite);
-            String log = "Data sent to characteristic: $dataToWrite";
-            return log;
+            print("Data sent to characteristic: $dataToWrite");
+            return 0;
           }
         }
-        String log = "Characteristic with UUID $characteristicUuid not found.";
-        return log;
+        print("Characteristic with UUID $characteristicUuid not found");
+        return -1;
       } catch (e) {
-        String log = "Error sending data to characteristic: $e";
-        return log;
+        print("Error sending data to characteristic: $e");
+        return -1;
       }
     } else {
-      String log = "No device connected. Cannot send data.";
-      return log;
+      print("No device connected. Cannot send data");
+      return -1;
     }
   }
 
   /// Read data from a given characteristic.
   ///
   /// [characteristic] The Bluetooth characteristic to read data from.
-  /// [data] read data.
-  Future<String> readDatafromCharacteristic(String characteristicUuid) async 
-  {
+  Future<int> readDatafromCharacteristic(String characteristicUuid) async {
     if (connectedDevice != null) {
       try {
         for (BluetoothCharacteristic characteristic in allCharacteristics) {
           if (characteristic.uuid.toString() == characteristicUuid) {
-            // if (characteristic.properties.read)
-            // {
-              read_data = await characteristic.read();
-              String log = "Data read from characteristic: $read_data";
-              return log;
-            // }
+            if (characteristic.properties.read) {
+              readData = await characteristic.read();
+              print("Data read from characteristic: $readData");
+              return 0;
+            }
           }
         }
-        String log = "Characteristic with UUID $characteristicUuid not found.";
-        return log;
+        print("Characteristic with UUID $characteristicUuid not found");
+        return -1;
       } catch (e) {
-        String log = "Error reading data from characteristic: $e";
-        return log;
+        print("Error reading data from characteristic: $e");
+        return -1;
       }
     } else {
-      String log = "No device connected. Cannot read data.";
-      return log;
+      print("No device connected. Cannot read data");
+      return -1;
     }
   }
 
@@ -195,17 +194,12 @@ class BleTab extends StatefulWidget {
             child: ListView.builder(
               itemCount: scanResults.length,
               itemBuilder: (context, index) {
-                var sortedResults = scanResults.values.toList()
-                  ..sort((a, b) => b.rssi.compareTo(a.rssi));
+                var sortedResults = scanResults.values.toList()..sort((a, b) => b.rssi.compareTo(a.rssi));
                 ScanResult result = sortedResults[index];
                 BluetoothDevice device = result.device;
                 return ListTile(
-                  leading: CircleAvatar(
-                    child: Text(result.rssi.toString()),
-                  ),
-                  title: Text(device.advName.isNotEmpty
-                      ? device.advName
-                      : 'Unknown Device'),
+                  leading: CircleAvatar(child: Text(result.rssi.toString()),),
+                  title: Text(device.advName.isNotEmpty? device.advName: 'Unknown Device'),
                   subtitle: Text(device.remoteId.toString()),
                   trailing: connectedDevice?.remoteId == device.remoteId
                       ? ElevatedButton(

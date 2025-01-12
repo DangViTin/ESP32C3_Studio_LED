@@ -4,13 +4,13 @@ import 'package:control_app_flutter/tabs_manager_page/tabs/control_tab.dart';
 
 class TabsManager extends StatefulWidget {
   @override
-  _TabsManagerState createState() => _TabsManagerState();
+  TabsManagerState createState() => TabsManagerState();
 }
 
-class _TabsManagerState extends State<TabsManager> {
-  int _currentIndex = 0;
+class TabsManagerState extends State<TabsManager> {
+  int currentIndex = 0;
 
-  final List<Widget> _tabs = [
+  final List<Widget> tabs = [
     BleTab(),
     CtrlTab(),
   ];
@@ -24,14 +24,14 @@ class _TabsManagerState extends State<TabsManager> {
         toolbarHeight: 40.0, // Set the height of the AppBar
       ),
       body: IndexedStack(
-        index: _currentIndex,
-        children: _tabs,
+        index: currentIndex,
+        children: tabs,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
+        currentIndex: currentIndex,
         onTap: (index) {
           setState(() {
-            _currentIndex = index;
+            currentIndex = index;
           });
         },
         items: const [

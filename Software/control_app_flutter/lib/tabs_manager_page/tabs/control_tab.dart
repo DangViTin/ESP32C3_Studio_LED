@@ -3,14 +3,10 @@ import 'dart:async';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'ble_tab.dart';
 
-Color _currentColor = Colors.blue;
-String _currentEffect = "";
-String dropdownListVal = "";
-List<String> option_list = [];
-String log = "";
-const RGB_UUID = "0193fe95-239a-7f23-826d-2b53e38f42b6";
-const effect_UUID = "0193fe95-239a-7f23-826d-2b53e38f42b7";
-int alreadyRead = 0;
+const rgbUUID = "0193fe95-239a-7f23-826d-2b53e38f42b6";
+const effectUUID = "0193fe95-239a-7f23-826d-2b53e38f42b7";
+const fanUUID = "0193fe95-239a-7f23-826d-2b53e38f42b9";
+const batteryUUID = "2a19";
 
 class CtrlTab extends StatefulWidget {
   @override
@@ -18,29 +14,36 @@ class CtrlTab extends StatefulWidget {
 }
 
 class CtrlTabState extends State<CtrlTab> {
+  int alreadyRead = 0;
+
   String option = "";
-  Timer? _timer;
+  List<String> optionList = [];
+  String currentEffect = "";
+  String dropdownListVal = "";
+
+  Color currentColor = Colors.blue;
+  Timer? timer;
 
   // Store the last time the color was updated
-  DateTime? _lastUpdatedTime;
+  DateTime? lastUpdatedTime;
   static const Duration debounceDuration =
       Duration(milliseconds: 100); // 100ms debounce
 
-  void _changeColor(Color color) async {
+  void changeColor(Color color) async {
     final now = DateTime.now();
 
     // Limit updates to 100ms
-    if (_lastUpdatedTime == null ||
-        now.difference(_lastUpdatedTime!) > debounceDuration) {
-      _lastUpdatedTime = now; // Update the last processed time
+    if (lastUpdatedTime == null ||
+        now.difference(lastUpdatedTime!) > debounceDuration) {
+      lastUpdatedTime = now; // Update the last processed time
 
       // Check if the color is the same to avoid unnecessary updates
-      if (_currentColor == color) {
+      if (currentColor == color) {
         return;
       }
 
       setState(() {
-        _currentColor = color;
+        currentColor = color;
       });
 
       // Convert the color to a list of integers (e.g., RGB values)
@@ -48,58 +51,62 @@ class CtrlTabState extends State<CtrlTab> {
 
       // Send the color data to the BLE device
       try {
-        String response =
-            await BleTabState().sendDataToCharacteristic(RGB_UUID, colorData);
-        print("Response: $response");
+        int ret = await BleTabState().sendDataToCharacteristic(rgbUUID, colorData);
+        if (ret == 0) {
+          print("Sending data ok");
+        } else {
+          print("Sending failed, code $ret");
+        }
       } catch (e) {
         print("Error sending data to BLE: $e");
       }
     }
   }
 
-  void _changeEffect(String effect) async {
+  void changeEffect(String effect) async {
     // Check if the effect is the same to avoid unnecessary updates
-    if (_currentEffect == effect) {
+    if (currentEffect == effect) {
       return;
     }
 
     setState(() {
-      _currentEffect = effect;
+      currentEffect = effect;
     });
 
     try {
       List<int> effectToSend = effect.codeUnits;
-      String response = await BleTabState()
-          .sendDataToCharacteristic(effect_UUID, effectToSend);
-      print("Response: $response");
+      int ret = await BleTabState().sendDataToCharacteristic(effectUUID, effectToSend);
+      if (ret == 0) {
+        print("Sending data ok");
+      } else {
+        print("Sending failed, code $ret");
+      }
     } catch (e) {
       print("Error sending data to BLE: $e");
     }
   }
 
   void readEffect() async {
-    await BleTabState().readDatafromCharacteristic(effect_UUID);
+    await BleTabState().readDatafromCharacteristic(effectUUID);
   }
 
   @override
   void initState() {
     super.initState();
 
-    // Polling periodically
-    _timer = Timer.periodic(Duration(milliseconds: 200), (timer) {
+    // Polling periodically until effects have been read
+    timer = Timer.periodic(Duration(milliseconds: 200), (timer) {
       if (BleTabState.connectedDevice != null && alreadyRead == 0) {
         readEffect();
-        option = String.fromCharCodes(BleTabState.read_data);
-        log += "Read raw: ${BleTabState.read_data} \n";
-        log += "Read list: $option\n";
+        option = String.fromCharCodes(BleTabState.readData);
 
-        option_list = option.split('\n');
-        dropdownListVal = option_list.first;
+        optionList = option.split('\n');
+        dropdownListVal = optionList.first;
 
-        if (option_list.length > 1) {
+        if (optionList.length > 1) {
           setState(() {
             alreadyRead = 1;
-            _timer?.cancel();
+            timer.cancel();
           });
         }
       }
@@ -108,27 +115,12 @@ class CtrlTabState extends State<CtrlTab> {
 
   @override
   void dispose() {
-    _timer?.cancel(); // Cancel the timer to avoid memory leaks
+    timer?.cancel(); // Cancel the timer to avoid memory leaks
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // if (BleTabState.connectedDevice != null && alreadyRead == 0) {
-    //   readEffect();
-    //   option = String.fromCharCodes(BleTabState.read_data);
-    //   log += "Read raw: ${BleTabState.read_data} \n";
-    //   log += "Read list: $option\n";
-
-    //   option_list = option.split('\n');
-    //   dropdownListVal = option_list.first;
-
-    //   if (option_list.length > 1) {
-    //     alreadyRead = 1;
-    //   //   _timer?.cancel();
-    //   }
-    // }
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF1877F2),
@@ -144,12 +136,12 @@ class CtrlTabState extends State<CtrlTab> {
               style: TextStyle(fontSize: 30),
             ),
             ColorPicker(
-              pickerColor: _currentColor,
-              onColorChanged: _changeColor,
+              pickerColor: currentColor,
+              onColorChanged: changeColor,
               enableAlpha: false,
               paletteType: PaletteType.hueWheel,
               pickerAreaHeightPercent:
-                  0.8, // Adjust this value to make the color wheel more compact
+                  0.8, // Adjust this value to adjust color wheel size
             ),
             Divider(
               height: 40,
@@ -177,8 +169,7 @@ class CtrlTabState extends State<CtrlTab> {
                     // Handle change here
                     setState(() {
                       dropdownListVal = newValue as String;
-                      _changeEffect(dropdownListVal);
-                      // log += "Effect changed to: $dropdownListVal\n";
+                      changeEffect(dropdownListVal);
                     });
                   },
                   items: option
@@ -189,30 +180,6 @@ class CtrlTabState extends State<CtrlTab> {
                       child: Text(value),
                     );
                   }).toList(),
-                ),
-              ),
-            ),
-            Divider(
-              height: 40,
-              thickness: 2,
-            ),
-            Text(
-              'Log',
-              style: TextStyle(fontSize: 30),
-            ),
-            SizedBox(height: 10),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: TextField(
-                controller: TextEditingController(text: log),
-                maxLines: 10,
-                readOnly: true,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
                 ),
               ),
             ),
