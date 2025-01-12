@@ -6,15 +6,13 @@
 #include "LED_effect_4.h"
 #include "LED_effect_5.h"
 #include "LED_effect_6.h"
-#include "digital_clock.h"
 
+#include "digital_clock.h"
 #include "ui.h"
 #include "usr_ui.h"
-
 #include "battery_monitoring.h"
 #include "ble.h"
 #include "ble_services.h"
-
 #include "cooling_system.h"
 
 LED_matrix my_LED_matrix;
@@ -83,13 +81,15 @@ int main(void)
 	my_LED_matrix.clear();
 	service_init(&service_callback);
 
+	// Wait for others task to init
+	k_sleep(K_MSEC(50));
 	while (1)
 	{
 		// Solid RGB screen
 		if (lv_scr_act() == ui_solidColor)
 		{
-			set_battery_icon_percent(get_battery_percent());
-			battery_is_charging(get_charging_status());
+			set_battery_percent_icon(get_battery_percent());
+			set_battery_charging_icon(get_charging_status());
 			usr_effect_2_single_color.run(
 				lv_slider_get_value(ui_redSlide) * 225 / 100,
 				lv_slider_get_value(ui_greenSlide) * 225 / 100,
@@ -100,8 +100,8 @@ int main(void)
 		// Effect screen
 		else if (lv_scr_act() == ui_effects)
 		{
-			set_battery_icon_percent(get_battery_percent());
-			battery_is_charging(get_charging_status());
+			set_battery_percent_icon(get_battery_percent());
+			set_battery_charging_icon(get_charging_status());
 			if (!strcmp(roller_str_get(), "Rainbow"))
 			{
 				usr_effect_3_single_color_rainbow.run(500, 20);
@@ -144,13 +144,27 @@ int main(void)
 		// main screen
 		else
 		{
-			set_battery_icon_percent(get_battery_percent());
-			battery_is_charging(get_charging_status());
-			if (!is_ble_connected())
+			uint8_t _is_ble_connected = is_ble_connected();
+
+			set_battery_percent_icon(get_battery_percent());
+			set_battery_charging_icon(get_charging_status());
+			set_ble_icon(_is_ble_connected);
+
+			if (!_is_ble_connected)
 			{
 				usr_effect_2_single_color.run(0, 0, 0);
+				set_text_connected_status(_is_ble_connected);
 				k_sleep(K_MSEC(10));
 				continue;
+			}
+		
+			if (ble_get_pass_code() != 0xBADC0DE)
+			{
+				set_text_passkey(ble_get_pass_code());
+			}
+			else
+			{
+				set_text_connected_status(_is_ble_connected);
 			}
 
 			switch (ble_control_LED_flag)
