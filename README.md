@@ -20,8 +20,8 @@ The panel features a 16x8 (128) addressable RGB LED array and a 3D-printed enclo
 
 <img src="Pictures/mech_front.png" style="width: 82%;">
 <div style="display: flex; justify-content: space-between; gap: 20px;">
-  <img src="Pictures/effect2.jpg" style="width: 49.5%; height: 310px; object-fit: contain;">
-  <img src="Pictures/inside.jpg" style="width: 49.5%; height: 310px; object-fit: contain;">
+  <img src="Pictures/effect2.jpg" style="width: 49%; height: 310px; object-fit: contain;">
+  <img src="Pictures/inside.jpg" style="width: 49%; height: 310px; object-fit: contain;">
 </div>
 
 ## Circuit Design
