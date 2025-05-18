@@ -18,9 +18,11 @@ The panel features a 16x8 (128) addressable RGB LED array and a 3D-printed enclo
 * Fully 3D printed using a Bambu Lab A1 Mini.
 * LED diffuser made of polycarbonate sheet.
 
-![_](Pictures/mech_front.png)
-![_](Pictures/effect2.jpg)
-![_](Pictures/inside.jpg)
+<img src="Pictures/mech_front.png" style="width: 82%;">
+<div style="display: flex; justify-content: space-between; gap: 20px;">
+  <img src="Pictures/effect2.jpg" style="width: 49.5%; height: 310px; object-fit: contain;">
+  <img src="Pictures/inside.jpg" style="width: 49.5%; height: 310px; object-fit: contain;">
+</div>
 
 ## Circuit Design
 
@@ -33,7 +35,7 @@ The panel features a 16x8 (128) addressable RGB LED array and a 3D-printed enclo
   * USB Type-C charging port.
   * Power path design to automatically balance charging current and load current.
 
-![_](Pictures/pcb.jpg)
+<img src="Pictures/pcb.jpg" style="width: 82%;">
 
 ## Firmware
 
@@ -50,8 +52,10 @@ The panel features a 16x8 (128) addressable RGB LED array and a 3D-printed enclo
 * Supports BLE connection to control the LED panel.
 * Users can control RGB colors and pre-defined LED effects.
 
-![_](Pictures/ble_scan.jpg)
-![_](Pictures/ble_control.jpg)
+<div style="display: flex; justify-content: space-between; gap: 20px;">
+  <img src="Pictures/ble_scan.jpg" style="width: 45.5%; height: 310px; object-fit: contain;">
+  <img src="Pictures/ble_control.jpg" style="width: 45.5%; height: 310px; object-fit: contain;">
+</div>
 
 ## Known Issues
 
